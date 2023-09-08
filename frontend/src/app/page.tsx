@@ -4,13 +4,13 @@ import AboutMe from "./components/SectionAboutMe/page";
 import Skill from "./components/SectionSkills/page";
 import PortFolio from "./components/SectionPortfolio/page";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
-const fetchProjectList = async () => {
-  const result = await prisma.project.findMany();
-  // throw new Error("ffff")
-  return result;
-};
+// const fetchProjectList = async () => {
+//   const result = await prisma.project.findMany();
+//   // throw new Error("ffff")
+//   return result;
+// };
 
 export default async function Name() {
   // const projects = await fetchProjectList();
