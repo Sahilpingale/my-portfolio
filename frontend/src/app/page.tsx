@@ -1,9 +1,26 @@
+import { PrismaClient } from "@prisma/client";
+import Header from "./components/SectionHeader/page";
+import AboutMe from "./components/SectionAboutMe/page";
+import Skill from "./components/SectionSkills/page";
+import PortFolio from "./components/SectionPortfolio/page";
 
+const prisma = new PrismaClient();
 
-export default function Name() {
+const fetchProjectList = async () => {
+  const result = await prisma.project.findMany();
+  // throw new Error("ffff")
+  return result;
+};
+
+export default async function Name() {
+  // const projects = await fetchProjectList();
+  // console.log("my-projects", projects);
   return (
     <div>
-      <h1>This is my portfolio.</h1>
+      <Header />
+      <AboutMe />
+      <Skill />
+      <PortFolio />
     </div>
   );
 }

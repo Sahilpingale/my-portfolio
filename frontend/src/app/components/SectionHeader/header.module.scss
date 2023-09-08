@@ -1,0 +1,73 @@
+// Wave Styles
+.custom_shape_divider_bottom_1652342433 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+  
+  .custom_shape_divider_bottom_1652342433 svg {
+    position: relative;
+    display: block;
+    width: calc(300% + 1.3px);
+    height: 350px;
+    transform: rotateY(180deg);
+  }
+  
+  .custom_shape_divider_bottom_1652342433 .shape_fill {
+    fill: #fff;
+  }
+
+  /************SECTION-HERO************/
+.section_hero {
+    position: relative;
+    background-color: #d0ebff;
+    padding: 4.8rem 0;
+    height: 35rem;
+    /* width: 170rem; */
+  }
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 130rem;
+    margin: 0 auto;
+    padding: 0 4.8rem;
+    align-items: center;
+  
+    position: absolute;
+    z-index: 100;
+  
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+  }
+  .hero_description {
+    font-size: 2rem;
+    color: #666;
+    margin-bottom: 3.2rem;
+  }
+  .hero_img_box {
+    position: relative;
+  }
+  .hero_img_box img {
+    // width: 70%;
+    display: block;
+    margin: 0 auto;
+  }
+  .hero_btn {
+    background-color: #339af0;
+    color: #fff;
+    transition: all 0.3s;
+  }
+  .hero_btn:hover,
+  .hero_btn:active {
+    background-color: #2c5170;
+    transition: all 0.3s;
+  }
+.heroImg{
+height: 60%;
+width: 60%;
+}
