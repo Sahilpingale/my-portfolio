@@ -7,7 +7,7 @@ const Header = () => {
     <section className={styles.section_hero} id="section-hero">
       <div className={styles.hero}>
         <div className={styles.hero_text_box}>
-          <h1 className="heading-primary">Unleash your brand's potential</h1>
+          <h1 className="heading-primary">Unleash your brand&apos;s potential</h1>
           <p className={styles.hero_description}>
             Get web solutions that add value to your business
           </p>

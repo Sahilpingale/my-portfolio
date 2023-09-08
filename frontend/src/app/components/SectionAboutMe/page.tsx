@@ -14,10 +14,10 @@ const AboutMe = () => {
           Your partner in digital transformation
         </h2>
         <p className="about-me-text">
-          Hi, I'm <span className="highlight">Sahil Pingale</span>, a web
-          developer based in Pune, India. I'm passionate about bringing both
-          the technical and visual aspects of digital products to life. I'm
-          happiest when I'm creating, learning, exploring and thinking about
+          Hi, I&apos;m <span className="highlight">Sahil Pingale</span>, a web
+          developer based in Pune, India. I&apos;m passionate about bringing both
+          the technical and visual aspects of digital products to life. I&apos;m
+          happiest when I&apos;m creating, learning, exploring and thinking about
           how to make things better.
         </p>
       </div>

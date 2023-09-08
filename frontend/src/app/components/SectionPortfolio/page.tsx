@@ -40,7 +40,7 @@ const PortFolio = () => {
           <div className="portfolio-text-box">
             <p className="portfolio-title">PetPet</p>
             <p className="portfolio-description">
-              One stop online store for all pet owner's needs
+              One stop online store for all pet owner&apos;s needs
             </p>
           </div>
           <div className="portfolio-button-area">
