@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PortFolio = () => {
+export default function Portfolio(){
   return (
     <section className="section-portfolio" id="section-portfolio">
     <div className="container">
@@ -108,5 +108,3 @@ const PortFolio = () => {
   </section>
   )
 }
-
-export default PortFolio

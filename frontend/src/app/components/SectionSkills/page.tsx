@@ -14,7 +14,7 @@ import postmanImg from "../../../assests/TechStackLarge/postman.svg"
 import vscodeImg from "../../../assests/TechStackLarge/vscode.svg"
 import figmaImg from "../../../assests/TechStackLarge/figma.svg"
 
-const Skill = () => {
+export default function Skills(){
   return (
     <section className="section-skills" id="section-skills">
     <div className="container">
@@ -96,5 +96,3 @@ const Skill = () => {
   </section>
   )
 }
-
-export default Skill

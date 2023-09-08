@@ -1,7 +1,7 @@
 import aboutMeImg from "../../../assests/about-me.png"
 import Image from "next/image"
 
-const AboutMe = () => {
+export default function AboutMe() {
   return (
     <section className="section-about-me" id="section-about-me">
     <div className="container grid grid-col-2">
@@ -25,5 +25,3 @@ const AboutMe = () => {
   </section>
   )
 }
-
-export default AboutMe

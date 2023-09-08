@@ -2,7 +2,7 @@ import heroImg from "../../../assests/hero-test-3.png";
 import Image from "next/image";
 import styles from "./header.module.scss";
 
-const Header = () => {
+export default function Header() {
   return (
     <section className={styles.section_hero} id="section-hero">
       <div className={styles.hero}>
@@ -35,5 +35,3 @@ const Header = () => {
     </section>
   );
 };
-
-export default Header;
