@@ -1,0 +1,97 @@
+/* Below 1000px */
+@media (max-width: 62.5rem) {
+  .portfolioDetails-description {
+    font-size: 1.2rem;
+    line-height: 1.2;
+  }
+  .techStack-description {
+    font-size: 1.3rem;
+    line-height: 1.7;
+  }
+  .portfolio-details-bottom {
+    margin-left: 6.4rem;
+    margin-right: 6.4rem;
+  }
+}
+
+/* Below 832px */
+@media (max-width: 52rem) {
+  .portfolio-details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 6.4rem;
+  }
+  .techStack-grid {
+    padding-right: 27.6rem;
+  }
+  .portfolio-details-bottom {
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
+    margin-top: 0rem;
+  }
+}
+
+/* Below 672px  */
+@media (max-width: 42rem) {
+  .techStack-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Below 544 */
+@media (max-width: 34rem) {
+  .techStack-description {
+    font-size: 1.1rem;
+  }
+
+  .demo:link,
+  .demo:visited {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.6rem;
+    width: 7rem;
+  }
+  .techStack-grid {
+    padding: 0;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+  .mx-5 {
+    margin-left: 4.8rem;
+    text-align: center;
+  }
+  .carousel__button--left {
+    left: -40px;
+  }
+  .carousel__button--right {
+    right: -40px;
+  }
+  .carousel__button svg {
+    display: block;
+    height: 17px;
+    width: 17px;
+  }
+}
+
+/* Below 424px */
+@media (max-width: 26.5rem) {
+  .portfolioDetails-description {
+    font-size: 0.9rem;
+  }
+  .techStack-description {
+    font-size: 0.9rem;
+  }
+  .container {
+    padding: 0 0.8rem;
+  }
+  .mx-5 {
+    /* margin-left: 3.5rem; */
+    text-align: center;
+  }
+  .carousel__button--left {
+    left: -32px;
+  }
+  .carousel__button--right {
+    right: -32px;
+  }
+}

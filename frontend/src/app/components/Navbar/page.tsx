@@ -1,37 +1,36 @@
 import "../../globals.css";
-import styles from "./navbar.module.scss"
 export default function Navbar() {
   return (
-    <header className={styles.header}>
+    <header className="header">
       <a href="index.html">
-        <p className={styles.temp_logo}>Sahil Pingale</p>
+        <p className="temp-logo">Sahil Pingale</p>
       </a>
-      <button className={styles.btn_mobile}>
-        {/* <ion_icon className="icon_mobile_nav" name="menu_outline"></ion_icon> */}
+      <button className="btn-mobile">
+        {/* <ion-icon className="icon-mobile-nav" name="menu-outline"></ion-icon> */}
       </button>
-      <nav className={styles.main_nav}>
-        <button className={styles.btn_mobile_nav}>
-          {/* <ion_icon className={styles.icon_mobile_nav" name="menu_outline"></ion_icon> 
-        <ion_icon className="icon_mobile_nav" name="close_outline"></ion_icon> */}
+      <nav className="main-nav">
+        <button className="btn-mobile-nav">
+          {/* <ion-icon className={icon-mobile-nav" name="menu-outline"></ion-icon> 
+        <ion-icon className="icon-mobile-nav" name="close-outline"></ion-icon> */}
         </button>
-        <ul className={styles.main_nav_list}>
+        <ul className="main-nav-list">
           <ul>
-            <a className={styles.main_nav_link}>
+            <a className="main-nav-link">
               About Me
             </a>
           </ul>
           <ul>
-            <a  className={styles.main_nav_link}>
+            <a  className="main-nav-link">
               Skills
             </a>
           </ul>
           <ul>
-            <a  className={styles.main_nav_link}>
+            <a  className="main-nav-link">
               How I Do It
             </a>
           </ul>
           <ul>
-            <a className={`${styles.nav_cta} ${styles.main_nav_link}`}>
+            <a className="nav-cta main-nav-link">
               Portfolio
             </a>
           </ul>
