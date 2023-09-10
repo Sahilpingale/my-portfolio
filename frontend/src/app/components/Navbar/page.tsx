@@ -6,12 +6,12 @@ export default function Navbar() {
         <p className="temp-logo">Sahil Pingale</p>
       </a>
       <button className="btn-mobile">
-        {/* <ion-icon className="icon-mobile-nav" name="menu-outline"></ion-icon> */}
+        {/* <button className="icon-mobile-nav" name="menu-outline">dd</button> */}
       </button>
       <nav className="main-nav">
         <button className="btn-mobile-nav">
-          {/* <ion-icon className={icon-mobile-nav" name="menu-outline"></ion-icon> 
-        <ion-icon className="icon-mobile-nav" name="close-outline"></ion-icon> */}
+           <button className="icon-mobile-nav" name="menu-outline">menu</button> 
+        <button className="icon-mobile-nav" name="close-outline">close</button> 
         </button>
         <ul className="main-nav-list">
           <ul>
