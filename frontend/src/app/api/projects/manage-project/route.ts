@@ -25,6 +25,7 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request, response: Response) {
+    console.log("i ran")
   try {
     const result = await prisma.project.findMany();
     return NextResponse.json({ data: result }, { status: 200 });
