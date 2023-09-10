@@ -6,7 +6,6 @@ import "./commonStyles.css";
 import "./styles.css";
 import "./mediaQueryStyles.css";
 import Footer from "./components/Footer/page";
-import { Providers } from "./chakraProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <Navbar /> */}
-        <Providers>
+           <Navbar />
           {children}
           <Footer />
-        </Providers>
       </body>
     </html>
   );

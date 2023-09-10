@@ -2,9 +2,13 @@ export async function GET(request: Request) {
     return new Response("hello")
 }
  
-export async function HEAD(request: Request) {}
+export async function HEAD(request: Request) {
+
+}
  
-export async function POST(request: Request) {}
+export async function POST(request: Request) {
+    return new Response("post hello")
+}
  
 export async function PUT(request: Request) {}
  
