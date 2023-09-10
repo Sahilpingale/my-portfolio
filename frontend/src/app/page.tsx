@@ -20,7 +20,7 @@ export default async function Name() {
   return (
     <div>
       {myProjects.data.map((p: any) => (
-        <div>{p.title}</div>
+        <div key={p.title}>{p.title}</div>
       ))}
       <Header />
       <AboutMe />
