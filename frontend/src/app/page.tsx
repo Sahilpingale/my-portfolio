@@ -8,7 +8,7 @@ import axios from "axios";
 const projects = async () => {
   console.log("i ran 2");
   const response = await axios.get(
-    "http://127.0.0.1:3000/api/projects/manage-project"
+    "https://127.0.0.1:3000/api/projects/manage-project"
   );
   // console.log("texrr",response.data)
   return response.data;
