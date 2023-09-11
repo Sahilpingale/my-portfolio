@@ -1,3 +1,4 @@
+
 import React from "react";
 import { ProjectTypes } from "@/app/libs/types";
 import Link from "next/link";
@@ -16,7 +17,7 @@ export default async function Portfolio({ projectsData }: any) {
       <div className="container flex">
         <div className="grid grid-col-3">
           {projects?.map((project: any) => (
-            <ProjectCard  project={project}/>
+            <ProjectCard key={project.id} project={project}/>
           ))}
         </div>
       </div>
