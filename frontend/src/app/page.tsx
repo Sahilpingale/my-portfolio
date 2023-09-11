@@ -18,7 +18,7 @@ export default async function Name() {
 
   return (
     <div>
-      {myProjects.data.map((p: any) => (
+      {myProjects?.data?.map((p: any) => (
         <div key={p.title}>{p.title}</div>
       ))}
       <Header />
