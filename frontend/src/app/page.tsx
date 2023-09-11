@@ -15,7 +15,7 @@ export default async function Name() {
   //   return response.data;
   // };
   const projects = async () => {
-    const url = `https://${process.env.VERCEL_URL}/api/projects/manage-project`
+    const url = `${process.env.VERCEL_URL}/api/projects/manage-project`
     console.log(url)
     const response = await fetch(url,{cache:"no-cache"})
     // console.log(response.json(),"ress")
