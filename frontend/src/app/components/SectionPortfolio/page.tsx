@@ -16,9 +16,7 @@ export default async function Portfolio({ projectsData }: any) {
       <div className="container flex">
         <div className="grid grid-col-3">
           {projects?.map((project: any) => (
-            <Link key={project.id} href={`/projects/${project.id}`}>
             <ProjectCard  project={project}/>
-            </Link>
           ))}
         </div>
       </div>
