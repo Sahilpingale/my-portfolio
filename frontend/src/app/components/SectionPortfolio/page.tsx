@@ -1,33 +1,27 @@
-import React from 'react'
+import React from "react";
+import { ProjectTypes } from "@/app/libs/types";
+import Link from "next/link";
+import ProjectCard from "../ProjectCard/page";
 
-export default function Portfolio() {
-  const ProjectCard = () =>{
-    return(
-      <div className="portfolio-card">
-      <div className="portfolio-text-box">
-        <p className="portfolio-title">Lead Management</p>
-        <p className="portfolio-description">
-          App that assist B2B companies Break Silos & Boost Sales
-        </p>
-      </div>
-      <div className="portfolio-button-area">
-        <a href="leadx.html" className="portfolio-btn">Details &rarr;</a>
-      </div>
-    </div>
-    )
-  }
-  
+export default async function Portfolio({ projectsData }: any) {
+  const projects = await projectsData;
+
+
   return (
     <section className="section-portfolio" id="section-portfolio">
-    <div className="container">
-      <span className="subheading">Portfolio</span>
-      <h2 className="heading-secondary">Check out my best work</h2>
-    </div>
-    <div className="container flex">
-      <div className="grid grid-col-3">
-          <ProjectCard />
+      <div className="container">
+        <span className="subheading">Portfolio</span>
+        <h2 className="heading-secondary">Check out my best work</h2>
       </div>
-    </div>
-  </section>
-  )
+      <div className="container flex">
+        <div className="grid grid-col-3">
+          {projects?.map((project: any) => (
+            <Link key={project.id} href={`/projects/${project.id}`}>
+            <ProjectCard  project={project}/>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

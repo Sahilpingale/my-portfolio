@@ -35,3 +35,43 @@ export async function GET(request: Request, response: Response) {
     });
   }
 }
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  try {
+
+    // Check if project exists, if it doesnt throw error
+    const projectExists = await prisma.project.findUnique({
+        where: {
+            id: Number(id)
+        }
+    })
+    if(!projectExists){
+        return NextResponse.json({
+            message: "Project not found"
+        },{
+            status:404
+        })
+    }
+    const result = await prisma.project.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+    console.log(result,"ress")
+    return NextResponse.json(
+      {
+        message: "Project deleted successfully",
+      },
+      { status: 200 }
+    );
+  } catch (err) {
+    return NextResponse.json(
+      {
+        message: "Err",
+      },
+      { status: 500 }
+    );
+  }
+}
