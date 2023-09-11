@@ -3,23 +3,15 @@ import Header from "./components/SectionHeader/page";
 import AboutMe from "./components/SectionAboutMe/page";
 import Skill from "./components/SectionSkills/page";
 import PortFolio from "./components/SectionPortfolio/page";
-export const dynamic = "force-dynamic"
+// export const dynamic = "force-dynamic"
+import getProjects from "./libs/getProjects";
 
 export default async function Name() {
-const prisma = new PrismaClient()
-  const myProjects = await prisma.project.findMany()
 
-  // const projects = async () => {
-  //   const url = `${process.env.DOMAIN}/api/projects/manage-project`
-  //   console.log(url)
-  //   const response = await fetch(url,{cache:"no-cache"})
-  //   return response.json()
-  // };
-  // const myProjects = await projects();
-
+  const projects = await getProjects();
   return (
     <div>
-      {myProjects.map((p: any) => (
+      {projects.data.map((p: any) => (
         <div key={p.title}>{p.title}</div>
       ))}
       <Header />
@@ -29,3 +21,7 @@ const prisma = new PrismaClient()
     </div>
   );
 }
+
+// No need to use prisma client directly from server components
+// 
+
