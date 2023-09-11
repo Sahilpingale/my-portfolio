@@ -15,7 +15,7 @@ export default async function Name() {
   //   return response.data;
   // };
   const projects = async () => {
-    const response = await fetch(`${process.env.APP_LAYER}${process.env.VERCEL_URL}api/projects/manage-project`,{cache:"no-cache"})
+    const response = await fetch(`${process.env.APP_LAYER}${process.env.VERCEL_URL}/api/projects/manage-project`,{cache:"no-cache"})
     // console.log(response.json(),"ress")
     return response.json()
   };
