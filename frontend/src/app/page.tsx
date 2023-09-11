@@ -15,12 +15,14 @@ export default async function Name() {
   //   return response.data;
   // };
   const projects = async () => {
-    const response = await fetch(`https://my-portfolio-8n98fsowv-sahilpingale.vercel.app/api/projects/manage-project`,{cache:"no-cache"})
+    const url = `${process.env.APP_LAYER}${process.env.VERCEL_URL}/api/projects/manage-project`
+    console.log(url)
+    const response = await fetch(url,{cache:"no-cache"})
     // console.log(response.json(),"ress")
     return response.json()
   };
   const myProjects = await projects();
-  console.log(myProjects,"reess")
+  // console.log(myProjects,"reess")
 
   return (
     <div>
