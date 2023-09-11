@@ -10,7 +10,7 @@ export default function ProjectCard({project}:any){
           </p>
         </div>
         <div className="portfolio-button-area">
-          <Link href={`/projects/${project.id}`}className="portfolio-btn">
+          <Link href={`/projects/${project?.id}`}className="portfolio-btn">
             Details &rarr;
           </Link>
         </div>
