@@ -7,14 +7,20 @@ import axios from "axios";
 
 
 export default async function Name() {
+  // const projects = async () => {
+  //   const response = await axios.get(
+  //     `https://my-portfolio-8n98fsowv-sahilpingale.vercel.app/api/projects/manage-project`
+  //   );
+  //   // console.log("texrr",response.data)
+  //   return response.data;
+  // };
   const projects = async () => {
-    const response = await axios.get(
-      `https://${process.env.VERCEL_URL}/api/projects/manage-project`
-    );
-    // console.log("texrr",response.data)
-    return response.data;
+    const response = await fetch(`http://localhost:3000/api/projects/manage-project`,{cache:"no-cache"})
+    // console.log(response.json(),"ress")
+    return response.json()
   };
   const myProjects = await projects();
+  console.log(myProjects,"reess")
 
   return (
     <div>
