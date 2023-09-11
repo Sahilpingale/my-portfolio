@@ -5,17 +5,16 @@ import Skill from "./components/SectionSkills/page";
 import PortFolio from "./components/SectionPortfolio/page";
 import axios from "axios";
 
-const projects = async () => {
-  console.log("i ran 2");
-  const response = await axios.get(
-    "http://localhost:3000/api/projects/manage-project"
-  );
-  // console.log("texrr",response.data)
-  return response.data;
-};
+
 export default async function Name() {
+  const projects = async () => {
+    const response = await axios.get(
+      `${process.env.VERCEL_URL}/api/projects/manage-project`
+    );
+    // console.log("texrr",response.data)
+    return response.data;
+  };
   const myProjects = await projects();
-  console.log(myProjects, "mkm");
 
   return (
     <div>
