@@ -9,7 +9,7 @@ import axios from "axios";
 export default async function Name() {
   const projects = async () => {
     const response = await axios.get(
-      `${process.env.VERCEL_URL}/api/projects/manage-project`
+      `https://${process.env.VERCEL_URL}/api/projects/manage-project`
     );
     // console.log("texrr",response.data)
     return response.data;
