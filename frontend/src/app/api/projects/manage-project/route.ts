@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
@@ -40,26 +40,27 @@ export async function DELETE(request: Request) {
   const id = searchParams.get("id");
 
   try {
-
     // Check if project exists, if it doesnt throw error
     const projectExists = await prisma.project.findUnique({
-        where: {
-            id: Number(id)
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!projectExists) {
+      return NextResponse.json(
+        {
+          message: "Project not found",
+        },
+        {
+          status: 404,
         }
-    })
-    if(!projectExists){
-        return NextResponse.json({
-            message: "Project not found"
-        },{
-            status:404
-        })
+      );
     }
     const result = await prisma.project.delete({
       where: {
         id: Number(id),
       },
     });
-    console.log(result,"ress")
     return NextResponse.json(
       {
         message: "Project deleted successfully",
@@ -72,6 +73,57 @@ export async function DELETE(request: Request) {
         message: "Err",
       },
       { status: 500 }
+    );
+  }
+}
+
+export async function PUT(
+  request: NextRequest,
+  response: NextResponse
+) {
+  const { id, title, description } = await request.json();
+  console.log("my title", title)
+  try {
+    // Chech if project exists, if it doesnt respond with a 404 status
+    const projectExists = prisma.project.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    if (!projectExists) {
+      return NextResponse.json(
+        {
+          message: "Project not found",
+        },
+        { status: 404 }
+      );
+    }
+    // If Project exists
+    const editedProject = await prisma.project.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        title,
+        description,
+      },
+    });
+    return NextResponse.json(
+      {
+        message: "Project edited successfully",
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (err) {
+    return NextResponse.json(
+      {
+        message: "Internal server error",
+      },
+      {
+        status: 500,
+      }
     );
   }
 }

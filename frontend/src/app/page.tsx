@@ -22,5 +22,6 @@ export default async function Name() {
 }
 
 // No need to use prisma client directly from server components
-// 
+// TDL :
+// project card should have loading state
 
