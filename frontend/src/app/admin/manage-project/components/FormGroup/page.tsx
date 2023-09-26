@@ -2,52 +2,80 @@
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import addProject from "@/app/libs/addProject";
+import { ITechStackItem, ITool, IProject, IOption } from "@/app/libs/types";
+import Multiselect from 'multiselect-react-dropdown';
+import { json } from "stream/consumers";
 
-export default function FormGroup() {
-
+export default function FormGroup({
+  id,
+  projectData,
+}: {
+  id?: string;
+  projectData: IProject;
+}) {
+  console.log("inside formgroup", projectData);
   // State Management
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [data, setData] = useState(projectData);
+
+  const [selected, setSelected] = useState([]);
+
+  const options = [
+    { name: "Grapes 🍇", value: "grapes", id: 1 },
+    { name: "Mango 🥭", value: "mango", id: 2 },
+    { name: "Strawberry 🍓", value: "strawberry", disabled: true, id: 3 },
+  ];
+
+  const selectedValues = [
+    { name: "Grapes 🍇", value: "grapes", id: 1 },
+  ]
 
   const formik = useFormik({
-    initialValues: {
-      title: "",
-      description: "",
-      demoURL: "",
-      githubURL: "",
-      testimonial: "",
-      purposeAndGoal: "",
-      techStackItems: [],
-      tools: [],
-    },
+    // Logic: If ID is undefined use blank object else fetch data and use it as initial values
+    initialValues: data,
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
       description: Yup.string().required("Description is required"),
-      demoURL: Yup.string(),
-      githubURL: Yup.string(),
-      testimonial: Yup.string(),
-      purposeAndGoal: Yup.string(),
+      demoURL: Yup.string().nullable(),
+      githubURL: Yup.string().nullable(),
+      testimonial: Yup.string().nullable(),
+      purposeAndGoal: Yup.string().nullable(),
       techStackItems: Yup.array()
         .min(1, "At least one tech stack item should be selected")
         .required("Required"),
     }),
     onSubmit: async (values) => {
-      setIsSaving(true)
-      try{
-        const res = await addProject(values)
-        console.log(res, "resss")
-      }catch(err){}finally{
-        setIsSaving(false)
-      }
+      alert(JSON.stringify(values))
+      // setIsSaving(true);
+      // try {
+      //   const res = await addProject(values);
+      //   console.log(res, "resss");
+      // } catch (err) {
+      // } finally {
+      //   setIsSaving(false);
+      // }
     },
   });
+
+  const onSelect = (selectedList:any, selectedItem:any)=> {
+    console.log("selected list",selectedList)
+    formik.setFieldValue("techStackItems",selectedList)
+}
+
+  if (isLoading) return <>Loading...</>;
+
+
 
   return (
     <section className="portfolio-details-top">
       <div className="mx-5 my-3 mb-4">
-        <h2 className="heading-secondary">Create new project</h2>
+        {/* Check if ID is undefined and render heading */}
+        <h2 className="heading-secondary">
+          {id ? "Edit project" : "Create new project"}
+        </h2>
       </div>
       <form className="container" onSubmit={formik.handleSubmit}>
         {/* Title */}
@@ -130,43 +158,37 @@ export default function FormGroup() {
         </div>
 
         {/* Tech stack selection */}
-        <div className="form-element">
+        <div className="form-element form-dropdown-container">
           <label className="form-title">Tech-Stack Items</label>
-          <select
-            multiple
-            name="techStackItems"
-            value={formik.values.techStackItems}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="form-text-area"
-          >
-            <option value="123">123</option>
-            <option value="456">456</option>
-            <option value="789">789</option>
-          </select>
+
+          <Multiselect
+            options={options} // Options to display in the dropdown
+            selectedValues={selectedValues} // Preselected value to persist in dropdown
+            onSelect={onSelect} // Function will trigger on select event
+            onRemove={onSelect} // Function will trigger on remove event
+            displayValue="name" // Property name to display in the dropdown options
+            style={{option: {
+              fontSize: 14
+            },multiselectContainer:{
+              border: "0.5px solid #000",
+              borderRadius: 3,
+            }}}
+          />
+
           {formik.touched.techStackItems && formik.errors.techStackItems ? (
-            <div className="form-error">{formik.errors.techStackItems}</div>
+            <div style={{marginTop:8}} className="form-error">
+              {formik.errors.techStackItems}
+            </div>
           ) : null}
         </div>
 
         {/* Tools selection */}
         <div className="form-element">
           <label className="form-title">Tools</label>
-          <select
-            multiple
-            name="tools"
-            value={formik.values.tools}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="form-text-area"
-          >
-            <option value="123">123</option>
-            <option value="456">456</option>
-            <option value="789">789</option>
-          </select>
-          {formik.touched.tools && formik.errors.tools ? (
-            <div className="form-error">{formik.errors.tools}</div>
-          ) : null}
+
+          {/* {formik.touched.tools && formik.errors.tools ? (
+            <div className="form-error">{(formik.errors.tools)}</div>
+          ) : null} */}
         </div>
 
         {/* Github URL */}
@@ -208,7 +230,7 @@ export default function FormGroup() {
         </div>
 
         <button disabled={isSaving} className="form-button" type="submit">
-          {isSaving? "Saving": "Submit"}
+          {isSaving ? "Saving" : "Submit"}
         </button>
       </form>
     </section>

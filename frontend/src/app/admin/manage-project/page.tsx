@@ -1,10 +1,22 @@
+import { ITechStackItem, IProject, IOption } from "@/app/libs/types";
 import FormGroup from "./components/FormGroup/page";
 
 
 export default function CreateProject() {
+  const initialValues : IProject = {
+    title: "" ,
+    githubURL: "",
+    demoURL: "",
+    testimonial:"",
+    purposeAndGoal: "",
+    techStackItems: [],
+    tools: [],
+    description:""
+  }
+
   return (
     <div>
-      <FormGroup />
+      <FormGroup projectData={initialValues}/>
     </div>
   );
 }

@@ -538,6 +538,9 @@ footer {
   resize: none;
   display: block;
 }
+.form-dropdown-container{
+  width: 50%
+}
 .form-button {
   text-decoration: none;
     background-color: #339af0;

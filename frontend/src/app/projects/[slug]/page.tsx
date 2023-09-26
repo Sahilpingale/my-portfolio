@@ -1,14 +1,31 @@
+"use client"
 import "./styles.css";
-import "../../mediaQueryStyles.css"
+import "../../mediaQueryStyles.css";
 import TechStactItem from "./components/TechStackItem/page";
+import { TrashIcon, ManageIcon } from "./components/Icons";
+import Link from "next/link";
+import DeleteProject from "./components/DeleteProject";
 
-export default function ProjectPage() {
+export default function ProjectPage({ params }: { params: { slug: string } }){
+  const projectId = params.slug
   return (
     <>
-    {/* TOP SECTION  */}
+      {/* TOP SECTION  */}
       <section className="portfolio-details-top">
         <div className="mx-5 my-3 mb-4">
-          <h2 className="heading-secondary">Lead Management</h2>
+          <div className="flex gap-3 alignCenter justifySpaceBetween">
+            <h2 className="heading-secondary">Lead Management</h2>
+            <div className="flex gap-1">
+              <Link
+                href={`/admin/manage-project/${projectId}`}
+                className="flex gap-1 alignCenter"
+              >
+                <span>Manage</span>
+                <ManageIcon />
+              </Link>
+              <DeleteProject projectId={projectId}/>
+            </div>
+          </div>
         </div>
         <div className="container portfolio-details-grid">
           {/* <!-- Image Box --> */}
@@ -25,19 +42,20 @@ export default function ProjectPage() {
               </p>
             </div>
             <div className="flex gap-2">
-            <a
-              className="demo inline-block"
-              href="https://sahilpingale.github.io/omnifood/"
-              target="_blank"
-            >
-              Live Demo
-            </a>
-            <a
-              className="demo inline-block"
-              href="https://github.com/Sahilpingale/omnifood"
-              target="_blank"
-            >
-              GitHub</a> 
+              <a
+                className="demo inline-block"
+                href="https://sahilpingale.github.io/omnifood/"
+                target="_blank"
+              >
+                Live Demo
+              </a>
+              <a
+                className="demo inline-block"
+                href="https://github.com/Sahilpingale/omnifood"
+                target="_blank"
+              >
+                GitHub
+              </a>
             </div>
 
             {/* <!-- Tech Stack --> */}
@@ -65,17 +83,17 @@ export default function ProjectPage() {
         </div>
       </section>
 
-    {/* BOTTOM SECTION */}
-    <section className="portfolio-details-bottom">
+      {/* BOTTOM SECTION */}
+      <section className="portfolio-details-bottom">
         <div className="container">
           <h2 className="heading-tertiary mb-0">My Role</h2>
           <p className="portfolioDetails-description">
             As a member of the full stack project team, I performed several
             important roles. Firstly, I was responsible for refactoring class
-            components into a function components in react. This involved rewriting the
-            code to improve its readability, maintainability, and performance.
-            It was a challenging task, but it helped to optimize the codebase
-            and make it more efficient.
+            components into a function components in react. This involved
+            rewriting the code to improve its readability, maintainability, and
+            performance. It was a challenging task, but it helped to optimize
+            the codebase and make it more efficient.
             <br />
             <br />
             Secondly, I added Google Analytics to the project. This allowed us
@@ -91,17 +109,17 @@ export default function ProjectPage() {
             exercise my creativity and problem-solving skills.
             <br />
             <br />
-            Fourthly, I wrote customs hooks in react to reuse logical functions across web and mobile. This
-            helped to improve the efficiency of development by reducing the
-            amount of code that needed to be written, maintained and tested. It was
-            satisfying to see how these hooks could be reused across different
-            parts of the project.
+            Fourthly, I wrote customs hooks in react to reuse logical functions
+            across web and mobile. This helped to improve the efficiency of
+            development by reducing the amount of code that needed to be
+            written, maintained and tested. It was satisfying to see how these
+            hooks could be reused across different parts of the project.
             <br />
             <br />
-            Fifthly, I worked on implementing new mobile features in React Native. This involved
-            designing and developing new features specifically for mobile
-            devices to ensure that the application was optimized for android and iOS
-            users.
+            Fifthly, I worked on implementing new mobile features in React
+            Native. This involved designing and developing new features
+            specifically for mobile devices to ensure that the application was
+            optimized for android and iOS users.
             <br />
             <br />
             Finally, I made sure that the project had a responsive layout. This

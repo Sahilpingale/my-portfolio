@@ -199,6 +199,14 @@ ul {
 .alignCenter{
   align-items: center;
 }
+.justifySpaceBetween{
+  justify-content: space-between;
+}
+.defaultButton{
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}
 .gap-1{
   gap: 0.8rem;
 }

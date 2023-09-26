@@ -4,7 +4,7 @@ import AboutMe from "./components/SectionAboutMe/page";
 import Skill from "./components/SectionSkills/page";
 import PortFolio from "./components/SectionPortfolio/page";
 import { ProjectTypes } from "./libs/types";
-// export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic"
 import getProjects from "./libs/getProjects";
 
 export default async function Name() {

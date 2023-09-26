@@ -30,7 +30,7 @@ export async function GET(request: Request, response: Response) {
     return NextResponse.json({ data: result }, { status: 200 });
   } catch (err) {
     NextResponse.json({
-      message: "Error",
+      message: "Error getting projects",
       err,
     });
   }
@@ -64,6 +64,7 @@ export async function DELETE(request: Request) {
     return NextResponse.json(
       {
         message: "Project deleted successfully",
+        success: true
       },
       { status: 200 }
     );
@@ -71,6 +72,7 @@ export async function DELETE(request: Request) {
     return NextResponse.json(
       {
         message: "Err",
+        success: false
       },
       { status: 500 }
     );
@@ -78,7 +80,7 @@ export async function DELETE(request: Request) {
 }
 
 export async function PUT(
-  request: NextRequest,
+  request: Request,
   response: NextResponse
 ) {
   const { id, title, description } = await request.json();
