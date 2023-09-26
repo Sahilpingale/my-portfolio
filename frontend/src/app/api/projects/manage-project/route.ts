@@ -38,14 +38,14 @@ export async function POST(request: Request) {
       }
     })
 
-    // const stackItemsOnProjectes = await prisma.projectsOnTechStackItem.createMany({
-    //   data: formattedData
-    // })
+    const stackItemsOnProjectes = await prisma.projectsOnTechStackItem.createMany({
+      data: formattedData
+    })
 
     return NextResponse.json(
       {
         message: "Project added successfully",
-        // data: newProject,
+        data: newProject,
       },
       { status: 200 }
     );
