@@ -11,7 +11,7 @@ export default async function EditProject({
   const projectId = params.slug;
   console.log(projectId);
 
-  const project = await getProjectDetails(projectId);
+  // const project = await getProjectDetails(projectId);
   // Fetch all tech stack items
   // const allStackItems = await getStackItems();
 
@@ -24,12 +24,12 @@ export default async function EditProject({
   // );
   return (
     <div>
-      <FormGroup
+      {/* <FormGroup
         // toolItems={toolItems}
         // techStackItems={techStackItems}
         projectData={project.data}
         id={projectId}
-      />
+      /> */}
     </div>
   );
 }
