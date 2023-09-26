@@ -1,7 +1,5 @@
 
 import React from "react";
-import { ProjectTypes } from "@/app/libs/types";
-import Link from "next/link";
 import ProjectCard from "../ProjectCard/page";
 
 export default async function Portfolio({ projectsData }: any) {
