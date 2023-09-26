@@ -3,7 +3,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState, useEffect } from "react";
-import addProject from "@/app/admin/manage-project/libs/addProject";
+import addProject from "@/app/libs/addProject";
 import { ITechStackItem, ITool, IProject, IOption } from "@/app/libs/types";
 import Multiselect from "multiselect-react-dropdown";
 import { json } from "stream/consumers";
