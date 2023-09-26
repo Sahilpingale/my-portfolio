@@ -30,6 +30,7 @@ model TechStackItem {
   id        Int                       @id @default(autoincrement())
   value     String                    @unique
   label     String
+  type      techStackType
   techStack ProjectsOnTechStackItem[]
 }
 
@@ -38,27 +39,10 @@ model Project {
   title          String
   description    String?
   projects       ProjectsOnTechStackItem[]
-  tools          ProjectsOnTools[]
   purposeAndGoal String?
   testimonial    String?
   githubURL      String?
   demoURL        String?
-}
-
-model Tool {
-  id       Int               @id @default(autoincrement())
-  value    String            @unique
-  label    String
-  projects ProjectsOnTools[]
-}
-
-model ProjectsOnTools {
-  project   Project @relation(fields: [projectId], references: [id])
-  projectId Int
-  tool      Tool    @relation(fields: [toolId], references: [id])
-  toolId    Int
-
-  @@id([projectId, toolId])
 }
 
 model ProjectsOnTechStackItem {
@@ -68,4 +52,9 @@ model ProjectsOnTechStackItem {
   techStackItemId Int
 
   @@id([projectId, techStackItemId])
+}
+
+enum techStackType {
+  TECHSTACK
+  TOOL
 }
