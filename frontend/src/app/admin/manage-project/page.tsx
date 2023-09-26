@@ -1,5 +1,5 @@
 import { ITechStackItem, IProject, IOption } from "@/app/libs/types";
-import FormGroup from "./components/FormGroup/page";
+import FormGroup from "./components/FormGroup/formGroup";
 
 
 export default function CreateProject() {

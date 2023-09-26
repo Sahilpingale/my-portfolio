@@ -1,4 +1,4 @@
-import FormGroup from "../components/FormGroup/page";
+import FormGroup from "../components/FormGroup/formGroup";
 import getProjectDetails from "./libs/getProjectDetails";
 
 export default async function EditProject({params}:{params : {slug : string}}) {
@@ -6,7 +6,6 @@ export default async function EditProject({params}:{params : {slug : string}}) {
   console.log(projectId)
 
   const project = await getProjectDetails(projectId)
-  console.log("myy",project.data,"myyy")
 
   return (
     <div>

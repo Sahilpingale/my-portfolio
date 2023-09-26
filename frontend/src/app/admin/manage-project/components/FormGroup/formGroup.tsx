@@ -1,21 +1,19 @@
-"use client";
+"use client"
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState, useEffect } from "react";
 import addProject from "@/app/libs/addProject";
 import { ITechStackItem, ITool, IProject, IOption } from "@/app/libs/types";
-import Multiselect from 'multiselect-react-dropdown';
+import Multiselect from "multiselect-react-dropdown";
 import { json } from "stream/consumers";
 
-export default function FormGroup({
-  id,
-  projectData,
-}: {
-  id?: string;
+interface IFormGroup {
+  id?: string | undefined;
   projectData: IProject;
-}) {
-  console.log("inside formgroup", projectData);
+}
+
+ const FormGroup = ({id, projectData}: IFormGroup) => {
   // State Management
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -29,9 +27,7 @@ export default function FormGroup({
     { name: "Strawberry 🍓", value: "strawberry", disabled: true, id: 3 },
   ];
 
-  const selectedValues = [
-    { name: "Grapes 🍇", value: "grapes", id: 1 },
-  ]
+  const selectedValues = [{ name: "Grapes 🍇", value: "grapes", id: 1 }];
 
   const formik = useFormik({
     // Logic: If ID is undefined use blank object else fetch data and use it as initial values
@@ -48,7 +44,7 @@ export default function FormGroup({
         .required("Required"),
     }),
     onSubmit: async (values) => {
-      alert(JSON.stringify(values))
+      alert(JSON.stringify(values));
       // setIsSaving(true);
       // try {
       //   const res = await addProject(values);
@@ -60,14 +56,12 @@ export default function FormGroup({
     },
   });
 
-  const onSelect = (selectedList:any, selectedItem:any)=> {
-    console.log("selected list",selectedList)
-    formik.setFieldValue("techStackItems",selectedList)
-}
+  const onSelect = (selectedList: any, selectedItem: any) => {
+    console.log("selected list", selectedList);
+    formik.setFieldValue("techStackItems", selectedList);
+  };
 
   if (isLoading) return <>Loading...</>;
-
-
 
   return (
     <section className="portfolio-details-top">
@@ -167,16 +161,19 @@ export default function FormGroup({
             onSelect={onSelect} // Function will trigger on select event
             onRemove={onSelect} // Function will trigger on remove event
             displayValue="name" // Property name to display in the dropdown options
-            style={{option: {
-              fontSize: 14
-            },multiselectContainer:{
-              border: "0.5px solid #000",
-              borderRadius: 3,
-            }}}
+            style={{
+              option: {
+                fontSize: 14,
+              },
+              multiselectContainer: {
+                border: "0.5px solid #000",
+                borderRadius: 3,
+              },
+            }}
           />
 
           {formik.touched.techStackItems && formik.errors.techStackItems ? (
-            <div style={{marginTop:8}} className="form-error">
+            <div style={{ marginTop: 8 }} className="form-error">
               {formik.errors.techStackItems}
             </div>
           ) : null}
@@ -235,4 +232,6 @@ export default function FormGroup({
       </form>
     </section>
   );
-}
+};
+
+export default FormGroup
