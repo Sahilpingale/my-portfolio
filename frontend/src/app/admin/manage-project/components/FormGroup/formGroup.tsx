@@ -11,8 +11,8 @@ import { json } from "stream/consumers";
 interface IFormGroup {
   id?: string | undefined;
   projectData: IProject;
-  toolItems : IOption[];
-  techStackItems : IOption[]
+  toolItems? : IOption[];
+  techStackItems? : IOption[]
 }
 
 const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) => {

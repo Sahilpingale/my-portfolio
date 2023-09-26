@@ -17,12 +17,14 @@ export default async function CreateProject() {
   const allStackItems = await getStackItems();
 
   // Filter out Tech stack items and tools
-  const techStackItems = allStackItems.data.filter((item: IOption)=> item.type === "TECHSTACK")
-  const toolItems = allStackItems.data.filter((item:IOption)=>item.type ==="TOOL")
+  // const techStackItems = allStackItems.data.filter((item: IOption)=> item.type === "TECHSTACK")
+  // const toolItems = allStackItems.data.filter((item:IOption)=>item.type ==="TOOL")
 
   return (
     <div>
-      <FormGroup toolItems={toolItems} techStackItems={techStackItems} projectData={initialValues} />
+      <FormGroup 
+      // toolItems={toolItems} techStackItems={techStackItems}
+       projectData={initialValues} />
     </div>
   );
 }
