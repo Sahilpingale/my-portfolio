@@ -46,12 +46,13 @@ model Project {
 }
 
 model ProjectsOnTechStackItem {
+  id              Int           @id @default(autoincrement())
   project         Project       @relation(fields: [projectId], references: [id])
   projectId       Int
   techStackItem   TechStackItem @relation(fields: [techStackItemId], references: [id])
   techStackItemId Int
 
-  @@id([projectId, techStackItemId])
+  // @@id([projectId, techStackItemId])
 }
 
 enum techStackType {

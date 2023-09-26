@@ -1,22 +1,28 @@
-import { ITechStackItem, IProject, IOption } from "@/app/libs/types";
+import { ITechStackItem, IProject, IOption, } from "@/app/libs/types";
 import FormGroup from "./components/FormGroup/formGroup";
+import getStackItems from "./libs/getStackItems";
 
-
-export default function CreateProject() {
-  const initialValues : IProject = {
-    title: "" ,
+export default async function CreateProject() {
+  const initialValues: IProject = {
+    title: "",
     githubURL: "",
     demoURL: "",
-    testimonial:"",
+    testimonial: "",
     purposeAndGoal: "",
     techStackItems: [],
     tools: [],
-    description:""
-  }
+    description: "",
+  };
+  // Fetch all tech stack items
+  const allStackItems = await getStackItems();
+
+  // Filter out Tech stack items and tools
+  const techStackItems = allStackItems.data.filter((item: IOption)=> item.type === "TECHSTACK")
+  const toolItems = allStackItems.data.filter((item:IOption)=>item.type ==="TOOL")
 
   return (
     <div>
-      <FormGroup projectData={initialValues}/>
+      <FormGroup toolItems={toolItems} techStackItems={techStackItems} projectData={initialValues} />
     </div>
   );
 }

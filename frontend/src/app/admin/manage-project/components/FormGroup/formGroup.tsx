@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState, useEffect } from "react";
-import addProject from "@/app/libs/addProject";
+import addProject from "@/app/admin/manage-project/libs/addProject";
 import { ITechStackItem, ITool, IProject, IOption } from "@/app/libs/types";
 import Multiselect from "multiselect-react-dropdown";
 import { json } from "stream/consumers";
@@ -11,9 +11,11 @@ import { json } from "stream/consumers";
 interface IFormGroup {
   id?: string | undefined;
   projectData: IProject;
+  toolItems : IOption[];
+  techStackItems : IOption[]
 }
 
- const FormGroup = ({id, projectData}: IFormGroup) => {
+const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) => {
   // State Management
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -22,12 +24,12 @@ interface IFormGroup {
   const [selected, setSelected] = useState([]);
 
   const options = [
-    { name: "Grapes 🍇", value: "grapes", id: 1 },
-    { name: "Mango 🥭", value: "mango", id: 2 },
-    { name: "Strawberry 🍓", value: "strawberry", disabled: true, id: 3 },
+    { label: "Grapes 🍇", value: "grapes", id: 1 },
+    { label: "Mango 🥭", value: "mango", id: 2 },
+    { label: "Strawberry 🍓", value: "strawberry", disabled: true, id: 3 },
   ];
 
-  const selectedValues = [{ name: "Grapes 🍇", value: "grapes", id: 1 }];
+  const selectedValues = [{ label: "Grapes 🍇", value: "grapes", id: 1 }];
 
   const formik = useFormik({
     // Logic: If ID is undefined use blank object else fetch data and use it as initial values
@@ -44,15 +46,29 @@ interface IFormGroup {
         .required("Required"),
     }),
     onSubmit: async (values) => {
-      alert(JSON.stringify(values));
-      // setIsSaving(true);
-      // try {
-      //   const res = await addProject(values);
-      //   console.log(res, "resss");
-      // } catch (err) {
-      // } finally {
-      //   setIsSaving(false);
-      // }
+      // alert(JSON.stringify(values));
+      // If ID is undefined create a new project
+      if(!id){
+        setIsSaving(true);
+        try {
+
+          // Logic:
+          // 1. Get project id after creating project
+          // 2. map through TechStack items array -> for each item create an entry into 'ProjectsOnTechStackItem' table where
+          //      'projectId' column will have value of project id recieved from earlier response
+          //      'techStackItemId' column will have value of stack item
+          const newProject = await addProject(values);
+          
+        } catch (err) {
+        } finally {
+          setIsSaving(false);
+        }
+      }
+      // If ID is not undefined its a existing project
+      if(id){
+        alert("edit")
+      }
+
     },
   });
 
@@ -154,13 +170,12 @@ interface IFormGroup {
         {/* Tech stack selection */}
         <div className="form-element form-dropdown-container">
           <label className="form-title">Tech-Stack Items</label>
-
           <Multiselect
-            options={options} // Options to display in the dropdown
+            options={techStackItems} // Options to display in the dropdown
             selectedValues={selectedValues} // Preselected value to persist in dropdown
             onSelect={onSelect} // Function will trigger on select event
             onRemove={onSelect} // Function will trigger on remove event
-            displayValue="name" // Property name to display in the dropdown options
+            displayValue="label" // Property name to display in the dropdown options
             style={{
               option: {
                 fontSize: 14,
@@ -234,4 +249,4 @@ interface IFormGroup {
   );
 };
 
-export default FormGroup
+export default FormGroup;

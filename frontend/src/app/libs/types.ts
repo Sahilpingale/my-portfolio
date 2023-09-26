@@ -5,8 +5,8 @@ export interface IProject {
   purposeAndGoal: string;
   demoURL: string;
   githubURL: string;
-  techStackItems:  IOption[] | null;
-  tools:  IOption[] | null;
+  techStackItems: IOption[] | null;
+  tools: IOption[] | null;
 }
 
 export interface ITechStackItem {
@@ -24,6 +24,11 @@ export interface ITool {
 export interface IOption {
   value: string;
   label: string;
-  id: string
-  name?: string
+  id: string;
+  type: "TECHSTACK" | "TOOL";
+}
+
+export enum StackOptions {
+  "TECHSTACK",
+  "TOOL",
 }

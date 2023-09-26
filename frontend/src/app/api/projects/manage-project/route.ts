@@ -1,21 +1,51 @@
+import { IOption } from "@/app/libs/types";
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
-  const { title, description } = await request.json();
+  const {
+    title,
+    description,
+    githubURL,
+    demoURL,
+    testimonial,
+    purposeAndGoal,
+    techStackItems,
+    tools,
+  } = await request.json();
+
+  const stackItems = techStackItems
 
   try {
-    const result = await prisma.project.create({
+    const newProject = await prisma.project.create({
       data: {
         title,
         description,
+        githubURL,
+        demoURL,
+        testimonial,
+        purposeAndGoal,
       },
     });
+    const newProjectID = Number(newProject.id)
+
+    const formattedData = stackItems.map((item:IOption)=> {
+      return {
+        projectId: newProjectID,
+        techStackItemId: item.id
+      }
+    })
+
+    const stackItemsOnProjectes = await prisma.projectsOnTechStackItem.createMany({
+      data: formattedData
+    })
+
     return NextResponse.json(
       {
         message: "Project added successfully",
+        data: newProject,
       },
       { status: 200 }
     );
@@ -64,7 +94,7 @@ export async function DELETE(request: Request) {
     return NextResponse.json(
       {
         message: "Project deleted successfully",
-        success: true
+        success: true,
       },
       { status: 200 }
     );
@@ -72,19 +102,16 @@ export async function DELETE(request: Request) {
     return NextResponse.json(
       {
         message: "Err",
-        success: false
+        success: false,
       },
       { status: 500 }
     );
   }
 }
 
-export async function PUT(
-  request: Request,
-  response: NextResponse
-) {
+export async function PUT(request: Request, response: NextResponse) {
   const { id, title, description } = await request.json();
-  console.log("my title", title)
+  console.log("my title", title);
   try {
     // Chech if project exists, if it doesnt respond with a 404 status
     const projectExists = prisma.project.findUnique({
