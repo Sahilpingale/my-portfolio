@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message: "Project added successfully",
-        data: newProject,
+        // data: newProject,
       },
       { status: 200 }
     );
