@@ -75,7 +75,7 @@ export default async function ProjectPage({
               <h2 className="heading-tertiary">Tech Stack</h2>
               <div className="techStack-grid">
                 {data.techStackItems.map((item: IOption) => (
-                  <TechStactItem stackItem={item} />
+                  <TechStactItem key={item.id} stackItem={item} />
                 ))}
               </div>
             </div>
@@ -84,7 +84,7 @@ export default async function ProjectPage({
               <h2 className="heading-tertiary">Tools used</h2>
               <div className="col-gap-none techStack-grid">
                 {data.tools.map((tool: IOption) => (
-                  <TechStactItem stackItem={tool} />
+                  <TechStactItem key={tool.id} stackItem={tool} />
                 ))}
               </div>
             </div>
