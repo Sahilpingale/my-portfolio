@@ -136,6 +136,10 @@
   .footer-temp-logo {
     font-size: 4rem;
   }
+    /* Section Project Details */
+    .form-element, .form-dropdown-area {
+      width:100%
+    } 
 }
 
 /********************/
@@ -292,9 +296,9 @@
     width: 55%;
   }
 
-element.style {
-  color: transparent;
-}
+  element.style {
+    color: transparent;
+  }
 
   /* Section About Me */
   /* Test-General */

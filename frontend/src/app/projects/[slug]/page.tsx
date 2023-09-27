@@ -1,4 +1,3 @@
-"use client"
 import "./styles.css";
 import "../../mediaQueryStyles.css";
 import TechStactItem from "./components/TechStackItem/page";

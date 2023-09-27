@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     tools,
   } = await request.json();
 
-  const stackItems = techStackItems;
+  const stackItems = techStackItems.concat(tools);
 
   try {
     // --- Method 2:
@@ -147,7 +147,7 @@ export async function PUT(request: Request, response: NextResponse) {
     tools,
     id,
   } = await request.json();
-  const stackItems = techStackItems;
+  const stackItems = techStackItems.concat(tools);
   console.log(title,
     description,
     githubURL,

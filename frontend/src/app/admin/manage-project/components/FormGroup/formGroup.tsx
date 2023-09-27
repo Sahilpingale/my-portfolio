@@ -8,6 +8,7 @@ import editProject from "@/app/projects/[slug]/libs/editProject";
 import { ITechStackItem, ITool, IProject, IOption } from "@/app/libs/types";
 import Multiselect from "multiselect-react-dropdown";
 import { json } from "stream/consumers";
+import { useRouter } from "next/navigation";
 
 interface IFormGroup {
   id?: string | undefined;
@@ -17,11 +18,9 @@ interface IFormGroup {
 }
 
 const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) => {
-  console.log("inside form group", projectData)
+  const router = useRouter()
   // State Management
-  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [data, setData] = useState(projectData);
 
   const [selected, setSelected] = useState([]);
 
@@ -35,7 +34,7 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
 
   const formik = useFormik({
     // Logic: If ID is undefined use blank object else fetch data and use it as initial values
-    initialValues: data,
+    initialValues: projectData,
     validationSchema: Yup.object({
       title: Yup.string().required("Title is required"),
       description: Yup.string().required("Description is required"),
@@ -59,10 +58,11 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
           //      'projectId' column will have value of project id recieved from earlier response
           //      'techStackItemId' column will have value of stack item
           const newProject = await addProject(values);
-          
+          router.push(`/admin/manage-project/${newProject.data.id}`)
         } catch (err) {
         } finally {
           setIsSaving(false);
+
         }
       }
       // If ID is not undefined its a existing project
@@ -80,19 +80,20 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
     },
   });
 
-  const onSelect = (selectedList: any, selectedItem: any) => {
-    console.log("selected list", selectedList);
+  const onTechStackItemSelect = (selectedList: IOption[]) => {
     formik.setFieldValue("techStackItems", selectedList);
   };
 
-  if (isLoading) return <>Loading...</>;
+  const onToolsSelect = (selectedList:IOption[]) =>{
+    formik.setFieldValue("tools",selectedList)
+  }
 
   return (
     <section className="portfolio-details-top">
-      <div className="mx-5 my-3 mb-4">
+      <div className="container my-2">
         {/* Check if ID is undefined and render heading */}
         <h2 className="heading-secondary">
-          {id ? "Edit project" : "Create new project"}
+          {id ? "Edit Project" : "Create New Project"}
         </h2>
       </div>
       <form className="container" onSubmit={formik.handleSubmit}>
@@ -181,8 +182,8 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
           <Multiselect
             options={techStackItems} // Options to display in the dropdown
             selectedValues={projectData.techStackItems} // Preselected value to persist in dropdown
-            onSelect={onSelect} // Function will trigger on select event
-            onRemove={onSelect} // Function will trigger on remove event
+            onSelect={onTechStackItemSelect} // Function will trigger on select event
+            onRemove={onTechStackItemSelect} // Function will trigger on remove event
             displayValue="label" // Property name to display in the dropdown options
             style={{
               option: {
@@ -205,7 +206,22 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
         {/* Tools selection */}
         <div className="form-element">
           <label className="form-title">Tools</label>
-
+          <Multiselect
+            options={toolItems} // Options to display in the dropdown
+            selectedValues={projectData.tools} // Preselected value to persist in dropdown
+            onSelect={onToolsSelect} // Function will trigger on select event
+            onRemove={onToolsSelect} // Function will trigger on remove event
+            displayValue="label" // Property name to display in the dropdown options
+            style={{
+              option: {
+                fontSize: 14,
+              },
+              multiselectContainer: {
+                border: "0.5px solid #000",
+                borderRadius: 3,
+              },
+            }}
+          />
           {formik.touched.tools && formik.errors.tools ? (
             <div className="form-error">{(formik.errors.tools)}</div>
           ) : null}
