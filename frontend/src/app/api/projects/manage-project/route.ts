@@ -101,11 +101,21 @@ export async function DELETE(request: Request) {
         }
       );
     }
+    const deleteRelation = await prisma.projectsOnTechStackItem.deleteMany({
+      where:{
+        projectId: Number(id)
+      }
+    })
     const result = await prisma.project.delete({
       where: {
         id: Number(id),
       },
+      // delete relation with 'ProjectsOnTechStackItem'
+      include:{
+        projects: true
+      }
     });
+
     return NextResponse.json(
       {
         message: "Project deleted successfully",
@@ -118,6 +128,7 @@ export async function DELETE(request: Request) {
       {
         message: "Err",
         success: false,
+        err
       },
       { status: 500 }
     );
