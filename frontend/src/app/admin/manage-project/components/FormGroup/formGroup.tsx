@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useState, useEffect } from "react";
 import addProject from "@/app/libs/addProject";
+import editProject from "@/app/projects/[slug]/libs/editProject";
 import { ITechStackItem, ITool, IProject, IOption } from "@/app/libs/types";
 import Multiselect from "multiselect-react-dropdown";
 import { json } from "stream/consumers";
@@ -16,6 +17,7 @@ interface IFormGroup {
 }
 
 const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) => {
+  console.log("inside form group", projectData)
   // State Management
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -46,7 +48,6 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
         .required("Required"),
     }),
     onSubmit: async (values) => {
-      // alert(JSON.stringify(values));
       // If ID is undefined create a new project
       if(!id){
         setIsSaving(true);
@@ -66,7 +67,14 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
       }
       // If ID is not undefined its a existing project
       if(id){
-        alert("edit")
+        setIsSaving(true);
+        try{
+          const editedProject = await editProject(id, values)
+        }catch(err){
+          console.log(err)
+        }finally {
+          setIsSaving(false);
+        }
       }
 
     },
@@ -172,7 +180,7 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
           <label className="form-title">Tech-Stack Items</label>
           <Multiselect
             options={techStackItems} // Options to display in the dropdown
-            selectedValues={selectedValues} // Preselected value to persist in dropdown
+            selectedValues={projectData.techStackItems} // Preselected value to persist in dropdown
             onSelect={onSelect} // Function will trigger on select event
             onRemove={onSelect} // Function will trigger on remove event
             displayValue="label" // Property name to display in the dropdown options
@@ -198,9 +206,9 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
         <div className="form-element">
           <label className="form-title">Tools</label>
 
-          {/* {formik.touched.tools && formik.errors.tools ? (
+          {formik.touched.tools && formik.errors.tools ? (
             <div className="form-error">{(formik.errors.tools)}</div>
-          ) : null} */}
+          ) : null}
         </div>
 
         {/* Github URL */}

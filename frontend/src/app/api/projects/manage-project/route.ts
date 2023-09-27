@@ -16,9 +16,10 @@ export async function POST(request: Request) {
     tools,
   } = await request.json();
 
-  const stackItems = techStackItems
+  const stackItems = techStackItems;
 
   try {
+    // --- Method 2:
     const newProject = await prisma.project.create({
       data: {
         title,
@@ -27,20 +28,34 @@ export async function POST(request: Request) {
         demoURL,
         testimonial,
         purposeAndGoal,
+        projects:{
+          createMany:{
+            data: stackItems.map((item:IOption) => ({
+              techStackItemId : item.id,
+            }))
+          }
+        }
       },
-    });
-    const newProjectID = Number(newProject.id)
-
-    const formattedData = stackItems.map((item:IOption)=> {
-      return {
-        projectId: newProjectID,
-        techStackItemId: item.id
+      include: {
+        projects: true
       }
-    })
+    });
 
-    const stackItemsOnProjectes = await prisma.projectsOnTechStackItem.createMany({
-      data: formattedData
-    })
+// --- Method 1:
+        // const newProjectID = Number(newProject.id);
+    // const formattedData = stackItems.map((item: IOption) => {
+    //   return {
+    //     projectId: newProjectID,
+    //     techStackItemId: item.id,
+    //   };
+    // });
+
+    // const stackItemsOnProjectes =
+    //   await prisma.projectsOnTechStackItem.createMany({
+    //     data: formattedData,
+    //   });
+
+    
 
     return NextResponse.json(
       {
@@ -110,8 +125,27 @@ export async function DELETE(request: Request) {
 }
 
 export async function PUT(request: Request, response: NextResponse) {
-  const { id, title, description } = await request.json();
-  console.log("my title", title);
+  const {
+    title,
+    description,
+    githubURL,
+    demoURL,
+    testimonial,
+    purposeAndGoal,
+    techStackItems,
+    tools,
+    id,
+  } = await request.json();
+  const stackItems = techStackItems;
+  console.log(title,
+    description,
+    githubURL,
+    demoURL,
+    testimonial,
+    purposeAndGoal,
+    techStackItems,
+    tools,
+    id,"inside router")
   try {
     // Chech if project exists, if it doesnt respond with a 404 status
     const projectExists = prisma.project.findUnique({
@@ -135,6 +169,20 @@ export async function PUT(request: Request, response: NextResponse) {
       data: {
         title,
         description,
+        githubURL,
+        demoURL,
+        testimonial,
+        purposeAndGoal,
+        projects:{
+          // Remove all the previous connections
+          deleteMany:{},
+          // Create new connections
+          createMany:{
+            data: stackItems.map((item:IOption)=>({
+              techStackItemId: item.id
+            }))
+          }
+        }
       },
     });
     return NextResponse.json(
