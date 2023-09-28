@@ -556,3 +556,14 @@ footer {
     border: none;
     margin-top: 2rem;
 }
+.guZdik {
+  max-width: 100% !important;
+  border: 0.75px solid #000 !important;
+  border-radius: 3px !important;
+}
+.form-select {
+  font-size: 1rem;
+  padding-inline: 0.8rem;
+  padding-block: 0.5rem;
+  width: 100%;
+}

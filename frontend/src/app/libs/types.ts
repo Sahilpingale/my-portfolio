@@ -22,9 +22,9 @@ export interface ITool {
 }
 
 export interface IOption {
-  value: string;
+  value?: string;
   label: string;
-  id: string;
+  id?: string;
   type: "TECHSTACK" | "TOOL";
 }
 

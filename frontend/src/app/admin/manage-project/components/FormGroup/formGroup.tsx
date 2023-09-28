@@ -7,30 +7,26 @@ import addProject from "@/app/libs/addProject";
 import editProject from "@/app/projects/[slug]/libs/editProject";
 import { ITechStackItem, ITool, IProject, IOption } from "@/app/libs/types";
 import Multiselect from "multiselect-react-dropdown";
-import { json } from "stream/consumers";
 import { useRouter } from "next/navigation";
+import { FileUploader } from "react-drag-drop-files";
 
 interface IFormGroup {
   id?: string | undefined;
   projectData: IProject;
-  toolItems? : IOption[];
-  techStackItems? : IOption[]
+  toolItems?: IOption[];
+  techStackItems?: IOption[];
 }
 
-const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) => {
-  const router = useRouter()
+const FormGroup = ({
+  id,
+  projectData,
+  toolItems,
+  techStackItems,
+}: IFormGroup) => {
+  const router = useRouter();
   // State Management
   const [isSaving, setIsSaving] = useState(false);
-
-  const [selected, setSelected] = useState([]);
-
-  const options = [
-    { label: "Grapes 🍇", value: "grapes", id: 1 },
-    { label: "Mango 🥭", value: "mango", id: 2 },
-    { label: "Strawberry 🍓", value: "strawberry", disabled: true, id: 3 },
-  ];
-
-  const selectedValues = [{ label: "Grapes 🍇", value: "grapes", id: 1 }];
+  const [file, setFile] = useState(null);
 
   const formik = useFormik({
     // Logic: If ID is undefined use blank object else fetch data and use it as initial values
@@ -48,45 +44,48 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
     }),
     onSubmit: async (values) => {
       // If ID is undefined create a new project
-      if(!id){
+      if (!id) {
         setIsSaving(true);
         try {
-
           // Logic:
           // 1. Get project id after creating project
           // 2. map through TechStack items array -> for each item create an entry into 'ProjectsOnTechStackItem' table where
           //      'projectId' column will have value of project id recieved from earlier response
           //      'techStackItemId' column will have value of stack item
           const newProject = await addProject(values);
-          router.push(`/admin/manage-project/${newProject.data.id}`)
+          router.push(`/admin/manage-project/${newProject.data.id}`);
         } catch (err) {
         } finally {
           setIsSaving(false);
-
         }
       }
       // If ID is not undefined its a existing project
-      if(id){
+      if (id) {
         setIsSaving(true);
-        try{
-          const editedProject = await editProject(id, values)
-        }catch(err){
-          console.log(err)
-        }finally {
+        try {
+          const editedProject = await editProject(id, values);
+        } catch (err) {
+          console.log(err);
+        } finally {
           setIsSaving(false);
         }
       }
-
     },
   });
 
+  // <!-- Multi Select Dropdown Function -->
   const onTechStackItemSelect = (selectedList: IOption[]) => {
     formik.setFieldValue("techStackItems", selectedList);
   };
+  const onToolsSelect = (selectedList: IOption[]) => {
+    formik.setFieldValue("tools", selectedList);
+  };
 
-  const onToolsSelect = (selectedList:IOption[]) =>{
-    formik.setFieldValue("tools",selectedList)
-  }
+  // <-- React-Drag-drop-Files Functions  -->
+  const fileTypes = ["JPG", "PNG", "GIF"];
+  const handleChange = (file: any) => {
+    setFile(file);
+  };
 
   return (
     <section className="portfolio-details-top">
@@ -223,7 +222,7 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
             }}
           />
           {formik.touched.tools && formik.errors.tools ? (
-            <div className="form-error">{(formik.errors.tools)}</div>
+            <div className="form-error">{formik.errors.tools}</div>
           ) : null}
         </div>
 
@@ -263,6 +262,14 @@ const FormGroup = ({ id, projectData, toolItems, techStackItems }: IFormGroup) =
           {formik.touched.demoURL && formik.errors.demoURL ? (
             <div className="form-error">{formik.errors.demoURL}</div>
           ) : null}
+        </div>
+
+        {/* Images Upload */}
+        <div className="form-element">
+          <label className="form-title" htmlFor="demoURL">
+            Upload Images
+          </label>
+          <FileUploader />
         </div>
 
         <button disabled={isSaving} className="form-button" type="submit">
