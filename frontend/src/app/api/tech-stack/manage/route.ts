@@ -35,7 +35,7 @@ export async function POST(req: Request, res: Response) {
     });
     // Return OK response
     return NextResponse.json(
-      { message: "TechStack added successfully" },
+      { message: "TechStack added successfully", data: response },
       { status: 200 }
     );
   } catch (err) {
@@ -130,9 +130,9 @@ export async function PUT(req: Request, res: Response) {
       },
       { status: 200 }
     );
-  } catch(err) {
+  } catch (err) {
     return NextResponse.json(
-      { message: "Failed to edit TechStack item", error:err },
+      { message: "Failed to edit TechStack item", error: err },
       { status: 500 }
     );
   }

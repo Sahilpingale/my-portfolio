@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import { useState, useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { IOption } from "@/app/libs/types";
+import addTechStack from "../libs/addTechStack";
+import { useRouter } from "next/navigation";
 
 interface IProps {
   stackData: IOption;
@@ -11,6 +13,7 @@ interface IProps {
 }
 
 const TechStackFormGroup = ({ stackData, id }: IProps) => {
+  const router = useRouter();
   // State Management
   const [isSaving, setIsSaving] = useState(false);
   const [file, setFile] = useState(null);
@@ -24,7 +27,20 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
         .required("Type of tech stack is required"),
     }),
     onSubmit: async (values) => {
-      alert(JSON.stringify(values));
+      if (!id) {
+        try {
+          setIsSaving(true);
+          const newStack = await addTechStack(values);
+          router.push(`/admin/manage-tech-stack/${newStack.data.id}`)
+        } catch (err) {
+          console.log("Failed to add tech stack", err);
+        } finally {
+          setIsSaving(false);
+        }
+      }
+      if (id) {
+        alert(JSON.stringify(values));
+      }
     },
   });
 
