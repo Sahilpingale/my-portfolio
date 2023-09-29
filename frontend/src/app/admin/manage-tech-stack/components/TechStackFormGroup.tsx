@@ -6,6 +6,7 @@ import { FileUploader } from "react-drag-drop-files";
 import { IOption } from "@/app/libs/types";
 import addTechStack from "../libs/addTechStack";
 import { useRouter } from "next/navigation";
+import editTechStack from "../[slug]/libs/editTechStack";
 
 interface IProps {
   stackData: IOption;
@@ -16,6 +17,7 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
   const router = useRouter();
   // State Management
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false)
   const [file, setFile] = useState(null);
 
   const formik = useFormik({
@@ -33,13 +35,20 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
           const newStack = await addTechStack(values);
           router.push(`/admin/manage-tech-stack/${newStack.data.id}`)
         } catch (err) {
-          console.log("Failed to add tech stack", err);
+          console.log("Failed to add tech stack123", err);
         } finally {
           setIsSaving(false);
         }
       }
       if (id) {
-        alert(JSON.stringify(values));
+        try{
+            setIsSaving(true)
+            const editedStack = await editTechStack(values)
+        }catch(err){
+            console.log("Failed to edit tech stack",err)
+        }finally{
+            setIsSaving(false)
+        }
       }
     },
   });
@@ -99,9 +108,12 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
             </label>
             <FileUploader />
           </div>
+          <button type="button" onClick={()=>{}} disabled={isDeleting} className="form-delete-button">
+            {isDeleting? "Deleting": "Delete"}
+            </button>      
 
           <button disabled={isSaving} className="form-button" type="submit">
-            {isSaving ? "Saving" : "Submit"}
+            {isSaving ? "Saving" : "Save"}
           </button>
         </form>
       </section>

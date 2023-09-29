@@ -26,6 +26,7 @@ const FormGroup = ({
   const router = useRouter();
   // State Management
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false)
   const [file, setFile] = useState(null);
 
   const formik = useFormik({
@@ -271,9 +272,11 @@ const FormGroup = ({
           </label>
           <FileUploader />
         </div>
-
+        <button type="button" onClick={()=>{}} disabled={isDeleting} className="form-delete-button">
+            {isDeleting? "Deleting": "Delete"}
+        </button>
         <button disabled={isSaving} className="form-button" type="submit">
-          {isSaving ? "Saving" : "Submit"}
+          {isSaving ? "Saving" : "Save"}
         </button>
       </form>
     </section>

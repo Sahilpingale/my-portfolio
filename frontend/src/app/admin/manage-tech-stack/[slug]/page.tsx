@@ -1,8 +1,14 @@
+import getTechStackDetails from "./libs/getTechStackDetails";
+import TechStackFormGroup from "../components/TechStackFormGroup";
 
-export default function EditTechStackItem() {
+export default async function EditTechStackItem({params}:{params: {slug :string}}) {
+  const id = params.slug
+
+  const stackData = await getTechStackDetails(id)
+  console.log(stackData,"fff")
   return (
     <div>
-      <h1>Hello EditTechStackItem Page</h1>
+      <TechStackFormGroup id={id} stackData={stackData.data}/>
     </div>
   );
 }

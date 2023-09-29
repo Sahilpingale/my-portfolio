@@ -1,6 +1,6 @@
 import { IOption } from "@/app/libs/types";
 
-export default async function getTechStackDetails(stackData:IOption){
+export default async function editTechStack(stackData:IOption){
     const response = await fetch(`/api/tech-stack/manage`,{
         method:"PUT",
         headers:{

@@ -542,7 +542,7 @@ footer {
 .form-dropdown-container{
   width: 50%
 }
-.form-button {
+.form-button,.form-delete-button {
   text-decoration: none;
     background-color: #339af0;
     color: #fff;
@@ -555,6 +555,9 @@ footer {
     text-align: center;
     border: none;
     margin-top: 2rem;
+}
+.form-delete-button {
+  background-color: #ce5164;
 }
 .guZdik {
   max-width: 100% !important;
