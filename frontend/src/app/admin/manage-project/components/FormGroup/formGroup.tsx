@@ -9,7 +9,8 @@ import { ITechStackItem, ITool, IProject, IOption } from "@/app/libs/types";
 import Multiselect from "multiselect-react-dropdown";
 import { useRouter } from "next/navigation";
 import { FileUploader } from "react-drag-drop-files";
-
+import DeleteButton from "@/app/admin/manage-project/components/FormGroup/DeleteButton";
+import DeleteProject from "@/app/projects/[slug]/components/DeleteProject";
 interface IFormGroup {
   id?: string | undefined;
   projectData: IProject;
@@ -26,7 +27,6 @@ const FormGroup = ({
   const router = useRouter();
   // State Management
   const [isSaving, setIsSaving] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false)
   const [file, setFile] = useState(null);
 
   const formik = useFormik({
@@ -272,12 +272,15 @@ const FormGroup = ({
           </label>
           <FileUploader />
         </div>
-        <button type="button" onClick={()=>{}} disabled={isDeleting} className="form-delete-button">
-            {isDeleting? "Deleting": "Delete"}
-        </button>
-        <button disabled={isSaving} className="form-button" type="submit">
-          {isSaving ? "Saving" : "Save"}
-        </button>
+
+        <div className="flex gap-1">
+          {/* Save Button */}
+          <button disabled={isSaving} className="form-button" type="submit">
+            {isSaving ? "Saving" : "Save"}
+          </button>
+          {/* Delete Button */}
+            <DeleteButton id={id}/>
+        </div>
       </form>
     </section>
   );

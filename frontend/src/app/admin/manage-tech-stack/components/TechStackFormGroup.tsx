@@ -7,6 +7,8 @@ import { IOption } from "@/app/libs/types";
 import addTechStack from "../libs/addTechStack";
 import { useRouter } from "next/navigation";
 import editTechStack from "../[slug]/libs/editTechStack";
+import deleteTechStack from "../[slug]/libs/deleteTechStack";
+import DeleteButton1 from "./DeleteButton1";
 
 interface IProps {
   stackData: IOption;
@@ -17,7 +19,7 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
   const router = useRouter();
   // State Management
   const [isSaving, setIsSaving] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false);
   const [file, setFile] = useState(null);
 
   const formik = useFormik({
@@ -33,7 +35,7 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
         try {
           setIsSaving(true);
           const newStack = await addTechStack(values);
-          router.push(`/admin/manage-tech-stack/${newStack.data.id}`)
+          router.push(`/admin/manage-tech-stack/${newStack.data.id}`);
         } catch (err) {
           console.log("Failed to add tech stack123", err);
         } finally {
@@ -41,13 +43,13 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
         }
       }
       if (id) {
-        try{
-            setIsSaving(true)
-            const editedStack = await editTechStack(values)
-        }catch(err){
-            console.log("Failed to edit tech stack",err)
-        }finally{
-            setIsSaving(false)
+        try {
+          setIsSaving(true);
+          const editedStack = await editTechStack(values);
+        } catch (err) {
+          console.log("Failed to edit tech stack", err);
+        } finally {
+          setIsSaving(false);
         }
       }
     },
@@ -108,13 +110,14 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
             </label>
             <FileUploader />
           </div>
-          <button type="button" onClick={()=>{}} disabled={isDeleting} className="form-delete-button">
-            {isDeleting? "Deleting": "Delete"}
-            </button>      
-
-          <button disabled={isSaving} className="form-button" type="submit">
-            {isSaving ? "Saving" : "Save"}
-          </button>
+          <div className="flex gap-1">
+            {/* Save Button */}
+            <button disabled={isSaving} className="form-button" type="submit">
+              {isSaving ? "Saving" : "Save"}
+            </button>
+            {/* Delete Button */}
+              <DeleteButton1 id={id}/>
+          </div>
         </form>
       </section>
     </>

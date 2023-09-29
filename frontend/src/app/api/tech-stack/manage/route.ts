@@ -83,6 +83,11 @@ export async function DELETE(req: Request, res: Response) {
     }
 
     // Proceed if item exists
+    const deleteRelation = await prisma.projectsOnTechStackItem.deleteMany({
+      where:{
+        techStackItemId : Number(id)
+      }
+    })
     const response = await prisma.techStackItem.delete({
       where: { id },
     });
@@ -93,8 +98,9 @@ export async function DELETE(req: Request, res: Response) {
       { status: 200 }
     );
   } catch (err) {
+    console.log(err)
     return NextResponse.json(
-      { message: "Failed to delete TechStack item" },
+      { message: "Failed to delete TechStack item",err },
       { status: 500 }
     );
   }

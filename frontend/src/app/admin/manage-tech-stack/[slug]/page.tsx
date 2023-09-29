@@ -5,7 +5,6 @@ export default async function EditTechStackItem({params}:{params: {slug :string}
   const id = params.slug
 
   const stackData = await getTechStackDetails(id)
-  console.log(stackData,"fff")
   return (
     <div>
       <TechStackFormGroup id={id} stackData={stackData.data}/>
