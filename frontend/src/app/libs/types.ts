@@ -16,7 +16,7 @@ export interface ITechStackItem {
 }
 
 export interface ITool {
-  id: Number;
+  id: String;
   value: string;
   label: string;
 }

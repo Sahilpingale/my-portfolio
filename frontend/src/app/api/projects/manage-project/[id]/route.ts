@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     // Method 2(using include)
     const project = await prisma.project.findUnique({
       where: {
-        id: Number(id),
+        id: String(id),
       },
       include: {
         projects: {
@@ -45,7 +45,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     // Find techstack items which exist for a particular project id
     // Method 1:
-    // const allItems = await prisma.projectsOnTechStackItem.findMany({where:{projectId:Number(id)}})
+    // const allItems = await prisma.projectsOnTechStackItem.findMany({where:{projectId:String(id)}})
     // const allItemDetails = await prisma.techStackItem.findMany({where:{
     //   id: {in: allItems.map((item)=> item.techStackItemId)}
     // }})

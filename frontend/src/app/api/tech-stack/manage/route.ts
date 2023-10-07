@@ -71,7 +71,7 @@ export async function DELETE(req: Request, res: Response) {
   try {
     // Check if TechStack exists
     const doesItemExist = await prisma.techStackItem.findUnique({
-      where: { id },
+      where: { id: String(id) },
     });
     if (!doesItemExist) {
       return NextResponse.json(
@@ -85,11 +85,11 @@ export async function DELETE(req: Request, res: Response) {
     // Proceed if item exists
     const deleteRelation = await prisma.projectsOnTechStackItem.deleteMany({
       where:{
-        techStackItemId : Number(id)
+        techStackItemId : String(id)
       }
     })
     const response = await prisma.techStackItem.delete({
-      where: { id },
+      where: { id: String(id) },
     });
     return NextResponse.json(
       {
@@ -112,7 +112,7 @@ export async function PUT(req: Request, res: Response) {
   try {
     // Check if TechStack item exists
     const doesItemExists = await prisma.techStackItem.findUnique({
-      where: { id: Number(id) },
+      where: { id: String(id) },
     });
     if (!doesItemExists) {
       return NextResponse.json({
@@ -123,7 +123,7 @@ export async function PUT(req: Request, res: Response) {
     // Proceed if item exists
     const response = await prisma.techStackItem.update({
       where: {
-        id: Number(id),
+        id: String(id),
       },
       data: {
         label,

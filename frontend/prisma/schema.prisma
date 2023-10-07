@@ -12,22 +12,22 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
+  id       String   @id @default(uuid())
   username String   @unique
   profile  Profile?
 }
 
 model Profile {
-  id           Int     @id @default(autoincrement())
+  id           String  @id @default(uuid())
   user         User    @relation(fields: [userId], references: [id])
-  userId       Int     @unique
+  userId       String  @unique
   githubURL    String?
   linkedinURL  String?
   instagramURL String?
 }
 
 model TechStackItem {
-  id        Int                       @id @default(autoincrement())
+  id        String                    @id @default(uuid())
   value     String                    @unique
   label     String
   type      techStackType
@@ -35,7 +35,7 @@ model TechStackItem {
 }
 
 model Project {
-  id             Int                       @id @default(autoincrement())
+  id             String                    @id @default(uuid())
   title          String
   description    String?
   projects       ProjectsOnTechStackItem[]
@@ -46,11 +46,11 @@ model Project {
 }
 
 model ProjectsOnTechStackItem {
-  id              Int           @id @default(autoincrement())
+  id              String        @id @default(uuid())
   project         Project       @relation(fields: [projectId], references: [id])
-  projectId       Int
+  projectId       String
   techStackItem   TechStackItem @relation(fields: [techStackItemId], references: [id])
-  techStackItemId Int
+  techStackItemId String
 
   // @@id([projectId, techStackItemId])
 }

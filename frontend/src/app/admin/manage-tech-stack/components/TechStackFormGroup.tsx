@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import editTechStack from "../[slug]/libs/editTechStack";
 import deleteTechStack from "../[slug]/libs/deleteTechStack";
 import DeleteButton1 from "./DeleteButton1";
+import {v4 as uuid} from "uuid"
 
 interface IProps {
   stackData: IOption;
@@ -34,6 +35,10 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
       if (!id) {
         try {
           setIsSaving(true);
+          const newId = uuid()
+          // values.id = uuid()
+          const formatedData = {...values, id: uuid()}
+          console.log("formateed valued", formatedData)
           const newStack = await addTechStack(values);
           router.push(`/admin/manage-tech-stack/${newStack.data.id}`);
         } catch (err) {

@@ -88,7 +88,7 @@ export async function DELETE(request: Request) {
     // Check if project exists, if it doesnt throw error
     const projectExists = await prisma.project.findUnique({
       where: {
-        id: Number(id),
+        id: String(id) ,
       },
     });
     if (!projectExists) {
@@ -103,12 +103,12 @@ export async function DELETE(request: Request) {
     }
     const deleteRelation = await prisma.projectsOnTechStackItem.deleteMany({
       where:{
-        projectId: Number(id)
+        projectId: String(id)
       }
     })
     const result = await prisma.project.delete({
       where: {
-        id: Number(id),
+        id : String(id),
       },
       // delete relation with 'ProjectsOnTechStackItem'
       include:{
@@ -161,7 +161,7 @@ export async function PUT(request: Request, response: NextResponse) {
     // Chech if project exists, if it doesnt respond with a 404 status
     const projectExists = prisma.project.findUnique({
       where: {
-        id: Number(id),
+        id: String(id),
       },
     });
     if (!projectExists) {
@@ -175,7 +175,7 @@ export async function PUT(request: Request, response: NextResponse) {
     // If Project exists
     const editedProject = await prisma.project.update({
       where: {
-        id: Number(id),
+        id: String(id),
       },
       data: {
         title,

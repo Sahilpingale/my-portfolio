@@ -561,8 +561,25 @@ footer {
 }
 .guZdik {
   max-width: 100% !important;
+  /* border: 0.75px solid #000 !important;
+  border-radius: 3px !important; */
+  border: none !important;
+}
+.file-uploader-container{
   border: 0.75px solid #000 !important;
   border-radius: 3px !important;
+}
+.uploaded-files-container{
+  display: flex;
+}
+.uploaded-file{
+  position: relative;
+}
+.uploaded-file-delete-button{
+  position: absolute;
+  top: 0;
+  right: 0;
+
 }
 .form-select {
   font-size: 1rem;

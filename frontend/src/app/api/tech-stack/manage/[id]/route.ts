@@ -9,7 +9,7 @@ export async function GET(req: Request, res: Response) {
     // Check if stack item exists
     const stackItem = await prisma.techStackItem.findUnique({
       where: {
-        id: Number(id),
+        id: String(id),
       },
     });
     console.log(stackItem);
