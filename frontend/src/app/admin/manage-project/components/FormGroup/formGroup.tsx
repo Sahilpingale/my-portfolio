@@ -326,7 +326,7 @@ const FormGroup = ({
           />
           {uploadedImages && <div className="uploaded-files-container">
             {uploadedImages?.map((image:any)=> (
-              <div className="uploaded-file">
+              <div key={uuidv4()} className="uploaded-file">
                 <div onClick={()=>removeImageFromList(image.name)} className="uploaded-file-delete-button"> 
                   <CloseCircleOutline style={{backgroundColor:"#fff"}} color={'#00000'} height="15x" width="15px"/>
                 </div>
