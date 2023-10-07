@@ -559,15 +559,14 @@ footer {
 .form-delete-button {
   background-color: #ce5164;
 }
-.guZdik {
-  max-width: 100% !important;
-  /* border: 0.75px solid #000 !important;
-  border-radius: 3px !important; */
-  border: none !important;
-}
+
 .file-uploader-container{
   border: 0.75px solid #000 !important;
   border-radius: 3px !important;
+}
+.file-uploader-container label{
+  border: none !important;
+  max-width: 100% !important;
 }
 .uploaded-files-container{
   display: flex;
