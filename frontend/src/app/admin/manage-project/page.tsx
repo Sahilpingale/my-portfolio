@@ -14,7 +14,8 @@ export default async function CreateProject() {
     description: "",
   };
   // Fetch all tech stack items
-  const allStackItems = await getStackItems();
+  const allStackItems = {data: []}
+  // const allStackItems = await getStackItems();
 
   // Filter out Tech stack items and tools
   const techStackItems = allStackItems.data.filter((item: IOption)=> item.type === "TECHSTACK")

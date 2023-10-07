@@ -57,6 +57,7 @@ export async function GET(req: Request, res: Response) {
     return NextResponse.json(
       {
         message: "Failed to fetch TeckStack items",
+        error: err
       },
       { status: 500 }
     );
