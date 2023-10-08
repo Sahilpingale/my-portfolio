@@ -570,14 +570,17 @@ footer {
 }
 .uploaded-files-container{
   display: flex;
+  gap: 10px;
+  padding: 25px;
+  flex-wrap: wrap;
 }
 .uploaded-file{
   position: relative;
 }
 .uploaded-file-delete-button{
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -5px;
+  right: -5px;
 
 }
 .form-select {

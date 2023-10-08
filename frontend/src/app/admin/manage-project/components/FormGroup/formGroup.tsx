@@ -14,7 +14,8 @@ import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/app/libs/supabase";
 import { FileObject } from "@supabase/storage-js";
 import Image from "next/image";
-import { CloseCircleOutline } from 'react-ionicons'
+import { CloseCircleOutline } from "react-ionicons";
+import Loader from "@/app/components/Loader/Loader";
 
 interface IFormGroup {
   id?: string | undefined;
@@ -34,6 +35,7 @@ const FormGroup = ({
   const [isSaving, setIsSaving] = useState(false);
   const [file, setFile] = useState(null);
   const [uploadedImages, setUploadedImages] = useState<any>(null);
+  const [isImageListLoading, setIsImageListLoading] = useState(false);
 
   const formik = useFormik({
     // Logic: If ID is undefined use blank object else fetch data and use it as initial values
@@ -89,18 +91,17 @@ const FormGroup = ({
   };
 
   // <-- React-Drag-drop-Files Functions  -->
-  const fileTypes = ["JPG", "PNG", "GIF"];
+  const fileTypes = ["JPG", "PNG"];
   const handleChange = async (files: any) => {
     setFile(files);
     const filesArray = Array.from(files);
-    console.log(filesArray, "xx file");
 
     try {
       await Promise.all(
         filesArray.map(async (file: any) => {
           const { data, error } = await supabase.storage
             .from("Portfolio_Bucket")
-            .upload(`Portfolio_Bucket/project/${file.name}`, file, {
+            .upload(`project/${id}/${file.name}`, file, {
               upsert: true,
             });
           if (data) {
@@ -114,26 +115,30 @@ const FormGroup = ({
     } catch (err) {
       console.log(err, "Error uploading all files");
     } finally {
+      setIsImageListLoading(true)
       const allImages = await getImagesList();
       setUploadedImages(allImages);
-      console.log(allImages)
+      setIsImageListLoading(false)
     }
   };
 
   const getImagesList = async () => {
     const { data, error } = await supabase.storage
       .from("Portfolio_Bucket")
-      .list("Portfolio_Bucket/project");
+      .list(`project/${id}`);
     if (data) return data;
     if (error) console.log("getImagesError", error);
   };
 
-  const removeImageFromList = async(filename: string) =>{
-    console.log("i ran",filename)
-    const {data, error} = await supabase.storage.from('Portfolio_Bucket').remove([`Portfolio_Bucket/project/${filename}`])
-    if(data) {setUploadedImages(getImagesList())}
-    if (error) console.log(error, "failed to delete image")
-  }
+  const removeImageFromList = async (filename: string) => {
+    const { data, error } = await supabase.storage
+      .from("Portfolio_Bucket")
+      .remove([`project/${id}/${filename}`]);
+    if (data) {
+      setUploadedImages(await getImagesList());
+    }
+    if (error) console.log(error, "failed to delete image");
+  };
 
   return (
     <section className="portfolio-details-top">
@@ -313,29 +318,52 @@ const FormGroup = ({
         </div>
 
         {/* Images Upload */}
-        <div className="form-element">
+        {/* File uploader will be shown after a project is saved and its id is available */}
+        {id && <div className="form-element">
           <label className="form-title" htmlFor="demoURL">
             Upload Images
           </label>
           <div className="file-uploader-container">
-          <FileUploader
-            multiple={true}
-            handleChange={handleChange}
-            name="file"
-            types={fileTypes}
-          />
-          {uploadedImages && <div className="uploaded-files-container">
-            {uploadedImages?.map((image:any)=> (
-              <div key={uuidv4()} className="uploaded-file">
-                <div onClick={()=>removeImageFromList(image.name)} className="uploaded-file-delete-button"> 
-                  <CloseCircleOutline style={{backgroundColor:"#fff"}} color={'#00000'} height="15x" width="15px"/>
-                </div>
-                <Image width={40} height={40}src={`${process.env.NEXT_PUBLIC_CDN}/${image.name}`} alt={`${process.env.NEXT_PUBLIC_CDN}/${image.name}`}/>
+            <FileUploader
+              multiple={true}
+              handleChange={handleChange}
+              name="file"
+              types={fileTypes}
+            />
+           {/* File Upload Loader */}
+            {isImageListLoading && <div className="uploaded-files-container"><Loader /></div>}
+            {/* Uploaded Images Container */}
+            {uploadedImages && !isImageListLoading &&(
+              <div className="uploaded-files-container">
+                {uploadedImages?.map((image: any) => (
+                  <div key={uuidv4()} className="uploaded-file">
+                    <div
+                      onClick={() => removeImageFromList(image.name)}
+                      className="uploaded-file-delete-button"
+                    >
+                      <CloseCircleOutline
+                        style={{
+                          backgroundColor: "#fff",
+                          borderRadius: "50%",
+                          border: "0.5px solid #000",
+                        }}
+                        color={"#00000"}
+                        height="25x"
+                        width="25px"
+                      />
+                    </div>
+                    <Image
+                      width={70}
+                      height={70}
+                      src={`${process.env.NEXT_PUBLIC_CDN_PROJECT}/${id}/${image.name}`}
+                      alt={`${process.env.NEXT_PUBLIC_CDN_PROJECT}/${id}/${image.name}`}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>}
+            )}
           </div>
-        </div>
+        </div>}
 
         <div className="flex gap-1">
           {/* Save Button */}

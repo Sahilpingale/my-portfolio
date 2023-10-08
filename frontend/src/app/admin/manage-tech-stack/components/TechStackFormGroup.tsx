@@ -9,7 +9,11 @@ import { useRouter } from "next/navigation";
 import editTechStack from "../[slug]/libs/editTechStack";
 import deleteTechStack from "../[slug]/libs/deleteTechStack";
 import DeleteButton1 from "./DeleteButton1";
-import {v4 as uuid} from "uuid"
+import { v4 as uuid } from "uuid";
+import { supabase } from "@/app/libs/supabase";
+import { CloseCircleOutline } from "react-ionicons";
+import Image from "next/image";
+import Loader from "@/app/components/Loader/Loader";
 
 interface IProps {
   stackData: IOption;
@@ -22,6 +26,10 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [file, setFile] = useState(null);
+  const [isImageLoading, setIsImageLoading] = useState(false);
+  const [techStackImage, setTechStackImage] = useState<any>(null);
+
+  const BUCKET = "Portfolio_Bucket";
 
   const formik = useFormik({
     initialValues: stackData,
@@ -35,10 +43,10 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
       if (!id) {
         try {
           setIsSaving(true);
-          const newId = uuid()
+          const newId = uuid();
           // values.id = uuid()
-          const formatedData = {...values, id: uuid()}
-          console.log("formateed valued", formatedData)
+          const formatedData = { ...values, id: uuid() };
+          console.log("formateed valued", formatedData);
           const newStack = await addTechStack(values);
           router.push(`/admin/manage-tech-stack/${newStack.data.id}`);
         } catch (err) {
@@ -59,6 +67,57 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
       }
     },
   });
+
+  // React Drap and Drop
+  const fileTypes = ["JPG", "PNG", "SVG"];
+  const handleFileChange = async (file: any) => {
+    setFile(file);
+    console.log("xx file", file);
+
+    try {
+      // 1. Delete Existing Image
+      await deleteExistingBucketItem(id as string);
+
+      // 2. Upload new Tech Stack Image
+      const { data, error } = await supabase.storage
+        .from(BUCKET)
+        .upload(`tech_stack_items/${id}/${file.name}`, file, { upsert: true });
+      if (error) console.log(error, "Error uploading a tech stack image");
+    } catch (err) {
+      alert(err + "Error uploading tech stack item image");
+    } finally {
+      setIsImageLoading(true);
+      const techStackImageFromBucket = await getTechStackImageFromBucket();
+      setTechStackImage(techStackImageFromBucket);
+      setIsImageLoading(false);
+    }
+  };
+  const deleteExistingBucketItem = async (id: string) => {
+    const { data: list } = await supabase.storage
+      .from(BUCKET)
+      .list(`tech_stack_items/${id}`);
+    
+      const filesToRemove = list ?list.map((item)=> `tech_stack_items/${id}/${item.name}`):[]
+
+    list?.map(async (item) => {
+      const { data, error } = await supabase.storage
+        .from(BUCKET)
+        .remove(filesToRemove);
+    });
+  };
+  const getTechStackImageFromBucket = async () => {
+    const { data, error } = await supabase.storage
+      .from("Portfolio_Bucket")
+      .list(`tech_stack_items/${id}`);
+    if (data) return data;
+    if (error) alert("Error getiing tech stack image from storage" + error);
+  };
+
+  const removeImageFromList = async (fileName:string)=>{
+    console.log("rmm", fileName)
+    const {data, error} = await supabase.storage.from(BUCKET).remove([`tech_stack_items/${id}/${fileName}`])
+    setTechStackImage([])
+  }
 
   return (
     <>
@@ -109,19 +168,53 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
           </div>
 
           {/* File Upload */}
-          <div className="form-element">
+            {/* File uploader will be shown after a tech stack item is saved and its id is available */}
+          {id &&<div className="form-element">
             <label className="form-title" htmlFor="demoURL">
               Upload SVG
             </label>
-            <FileUploader />
-          </div>
+
+            <div className="file-uploader-container">
+              <FileUploader
+                types={fileTypes}
+                name="file"
+                handleChange={handleFileChange}
+              />
+              {/* File Upload Loader */}
+              {isImageLoading && <div className="uploaded-files-container"><Loader /></div>}
+              {/* Uploaded Images Container */}
+              {techStackImage?.length > 0 && !isImageLoading && (
+                <div className="uploaded-files-container">
+                  <div className="uploaded-file">
+                    <div
+                      onClick={() => removeImageFromList(techStackImage[0].name)}
+                      className="uploaded-file-delete-button"
+                    >
+                      <CloseCircleOutline
+                        style={{ backgroundColor: "#fff", borderRadius:"50%", border:"0.5px solid #000" }}
+                        color={"#00000"}
+                        height="25x"
+                        width="25px"
+                      />
+                    </div>
+                    <Image
+                      width={70}
+                      height={70}
+                      src={`${process.env.NEXT_PUBLIC_CDN_TECH_STACK}/${id}/${techStackImage[0].name}`}
+                      alt={`${process.env.NEXT_PUBLIC_CDN_TECH_STACK}/${id}/${techStackImage[0].name}`}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>}
           <div className="flex gap-1">
             {/* Save Button */}
             <button disabled={isSaving} className="form-button" type="submit">
               {isSaving ? "Saving" : "Save"}
             </button>
             {/* Delete Button */}
-              <DeleteButton1 id={id}/>
+            <DeleteButton1 id={id} />
           </div>
         </form>
       </section>
