@@ -32,6 +32,7 @@ model TechStackItem {
   label     String
   type      techStackType
   techStack ProjectsOnTechStackItem[]
+  images    String[]
 }
 
 model Project {
@@ -43,6 +44,7 @@ model Project {
   testimonial    String?
   githubURL      String?
   demoURL        String?
+  images         String[]
 }
 
 model ProjectsOnTechStackItem {

@@ -7,6 +7,7 @@ export interface IProject {
   githubURL: string;
   techStackItems: IOption[] | null;
   tools: IOption[] | null;
+  images?: string[];
 }
 
 export interface ITechStackItem {
@@ -26,6 +27,7 @@ export interface IOption {
   label: string;
   id?: string;
   type: "TECHSTACK" | "TOOL";
+  images?: string[];
 }
 
 export enum StackOptions {

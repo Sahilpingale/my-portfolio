@@ -43,10 +43,6 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
       if (!id) {
         try {
           setIsSaving(true);
-          const newId = uuid();
-          // values.id = uuid()
-          const formatedData = { ...values, id: uuid() };
-          console.log("formateed valued", formatedData);
           const newStack = await addTechStack(values);
           router.push(`/admin/manage-tech-stack/${newStack.data.id}`);
         } catch (err) {
@@ -88,7 +84,7 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
     } finally {
       setIsImageLoading(true);
       const techStackImageFromBucket = await getTechStackImageFromBucket();
-      setTechStackImage(techStackImageFromBucket);
+      setTechStackImage(techStackImageFromBucket?.map((image)=>image.name));
       setIsImageLoading(false);
     }
   };
@@ -200,8 +196,8 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
                     <Image
                       width={70}
                       height={70}
-                      src={`${process.env.NEXT_PUBLIC_CDN_TECH_STACK}/${id}/${techStackImage[0].name}`}
-                      alt={`${process.env.NEXT_PUBLIC_CDN_TECH_STACK}/${id}/${techStackImage[0].name}`}
+                      src={`${process.env.NEXT_PUBLIC_CDN_TECH_STACK}/${id}/${techStackImage[0]}`}
+                      alt={`${process.env.NEXT_PUBLIC_CDN_TECH_STACK}/${id}/${techStackImage[0]}`}
                     />
                   </div>
                 </div>

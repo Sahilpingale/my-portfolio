@@ -117,7 +117,7 @@ const FormGroup = ({
     } finally {
       setIsImageListLoading(true)
       const allImages = await getImagesList();
-      setUploadedImages(allImages);
+      setUploadedImages(allImages?.map((image)=>image.name));
       setIsImageListLoading(false)
     }
   };
@@ -135,7 +135,8 @@ const FormGroup = ({
       .from("Portfolio_Bucket")
       .remove([`project/${id}/${filename}`]);
     if (data) {
-      setUploadedImages(await getImagesList());
+      const allImages = await getImagesList();
+      setUploadedImages(allImages?.map((image)=>image.name));
     }
     if (error) console.log(error, "failed to delete image");
   };
@@ -338,7 +339,7 @@ const FormGroup = ({
                 {uploadedImages?.map((image: any) => (
                   <div key={uuidv4()} className="uploaded-file">
                     <div
-                      onClick={() => removeImageFromList(image.name)}
+                      onClick={() => removeImageFromList(image)}
                       className="uploaded-file-delete-button"
                     >
                       <CloseCircleOutline
@@ -355,8 +356,8 @@ const FormGroup = ({
                     <Image
                       width={70}
                       height={70}
-                      src={`${process.env.NEXT_PUBLIC_CDN_PROJECT}/${id}/${image.name}`}
-                      alt={`${process.env.NEXT_PUBLIC_CDN_PROJECT}/${id}/${image.name}`}
+                      src={`${process.env.NEXT_PUBLIC_CDN_PROJECT}/${id}/${image}`}
+                      alt={`${process.env.NEXT_PUBLIC_CDN_PROJECT}/${id}/${image}`}
                     />
                   </div>
                 ))}
