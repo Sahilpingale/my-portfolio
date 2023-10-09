@@ -71,6 +71,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         testimonial: project.testimonial,
         techStackItems,
         tools,
+        images: project.images
       },
     });
   } catch (err) {

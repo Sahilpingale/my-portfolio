@@ -31,6 +31,9 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
 
   const BUCKET = "Portfolio_Bucket";
 
+  useEffect(()=>{
+    setTechStackImage(stackData.images)
+  },[])
   const formik = useFormik({
     initialValues: stackData,
     validationSchema: Yup.object({
@@ -58,7 +61,6 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
           setIsSaving(true);
           const formatedValue = {...values}
           formatedValue.images = techStackImage
-          console.log("fmtd value", formatedValue)
           const editedStack = await editTechStack(formatedValue);
         } catch (err) {
           console.log("Failed to edit tech stack", err);

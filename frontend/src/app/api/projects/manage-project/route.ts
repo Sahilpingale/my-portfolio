@@ -146,17 +146,9 @@ export async function PUT(request: Request, response: NextResponse) {
     techStackItems,
     tools,
     id,
+    images
   } = await request.json();
   const stackItems = techStackItems.concat(tools);
-  console.log(title,
-    description,
-    githubURL,
-    demoURL,
-    testimonial,
-    purposeAndGoal,
-    techStackItems,
-    tools,
-    id,"inside router")
   try {
     // Chech if project exists, if it doesnt respond with a 404 status
     const projectExists = prisma.project.findUnique({
@@ -193,7 +185,8 @@ export async function PUT(request: Request, response: NextResponse) {
               techStackItemId: item.id
             }))
           }
-        }
+        },
+        images
       },
     });
     return NextResponse.json(

@@ -5,7 +5,8 @@ import { TrashIcon, ManageIcon } from "./components/Icons";
 import Link from "next/link";
 import DeleteProject from "./components/DeleteProject";
 import getProjectDetails from "@/app/admin/manage-project/[slug]/libs/getProjectDetails";
-import { IOption } from "@/app/libs/types";
+import { IOption, IProject } from "@/app/libs/types";
+import Carousel from "./components/Carousel";
 export const dynamic = "force-dynamic";
 
 export default async function ProjectPage({
@@ -38,7 +39,9 @@ export default async function ProjectPage({
         </div>
         <div className="container portfolio-details-grid">
           {/* <!-- Image Box --> */}
-          <div className="portfolio-item-img-box">carousel here</div>
+          <div className="portfolio-item-img-box">
+            <Carousel projectId={projectId} images={data.images}/>
+          </div>
           {/* <!-- Text Box --> */}
           <div className="portfolio-text-box">
             {/* <!-- Description --> */}

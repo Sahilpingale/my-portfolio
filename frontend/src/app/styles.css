@@ -514,6 +514,10 @@ footer {
   margin-left: 6.4rem;
   margin-right: 6.4rem;
 }
+.carousel-slide {
+  width: 100%;
+  height: auto;
+}
 
 /* *****************SECTION-CREATE-NEW-PROJECT****************** */
 .form-title {

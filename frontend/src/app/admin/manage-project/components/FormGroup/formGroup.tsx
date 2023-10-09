@@ -37,6 +37,11 @@ const FormGroup = ({
   const [uploadedImages, setUploadedImages] = useState<any>(null);
   const [isImageListLoading, setIsImageListLoading] = useState(false);
 
+  useEffect(()=>{
+    console.log("mkm",projectData.images)
+    setUploadedImages(projectData.images)
+  },[])
+
   const formik = useFormik({
     // Logic: If ID is undefined use blank object else fetch data and use it as initial values
     initialValues: projectData,
@@ -72,7 +77,7 @@ const FormGroup = ({
       if (id) {
         setIsSaving(true);
         try {
-          const editedProject = await editProject(id, values);
+          const editedProject = await editProject(id, {...values, images: uploadedImages});
         } catch (err) {
           console.log(err);
         } finally {
@@ -91,7 +96,7 @@ const FormGroup = ({
   };
 
   // <-- React-Drag-drop-Files Functions  -->
-  const fileTypes = ["JPG", "PNG"];
+  const fileTypes = ["JPG", "PNG", 'SVG'];
   const handleChange = async (files: any) => {
     setFile(files);
     const filesArray = Array.from(files);
