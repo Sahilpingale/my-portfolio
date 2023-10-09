@@ -26,6 +26,7 @@ CREATE TABLE "TechStackItem" (
     "value" TEXT NOT NULL,
     "label" TEXT NOT NULL,
     "type" "techStackType" NOT NULL,
+    "images" TEXT[],
 
     CONSTRAINT "TechStackItem_pkey" PRIMARY KEY ("id")
 );
@@ -39,7 +40,7 @@ CREATE TABLE "Project" (
     "testimonial" TEXT,
     "githubURL" TEXT,
     "demoURL" TEXT,
-    "test" TEXT NOT NULL,
+    "images" TEXT[],
 
     CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
 );

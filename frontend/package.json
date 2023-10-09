@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^5.2.0",
+    "@prisma/client": "^5.4.1",
     "@supabase/supabase-js": "^2.38.0",
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",

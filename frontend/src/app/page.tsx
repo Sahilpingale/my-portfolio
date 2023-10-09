@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import Header from "./components/SectionHeader/page";
 import AboutMe from "./components/SectionAboutMe/page";
 import Skill from "./components/SectionSkills/page";

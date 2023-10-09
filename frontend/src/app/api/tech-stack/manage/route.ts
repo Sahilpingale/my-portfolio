@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/app/libs/db";
 
-const prisma = new PrismaClient();
 
 export async function POST(req: Request, res: Response) {
   const { type, label } = await req.json();
@@ -108,7 +107,7 @@ export async function DELETE(req: Request, res: Response) {
 }
 
 export async function PUT(req: Request, res: Response) {
-  const { id, label, type } = await req.json();
+  const { id, label, type, images } = await req.json();
 
   try {
     // Check if TechStack item exists
@@ -129,6 +128,7 @@ export async function PUT(req: Request, res: Response) {
       data: {
         label,
         type,
+        images
       },
     });
     return NextResponse.json(

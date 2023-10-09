@@ -40,6 +40,7 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
         .required("Type of tech stack is required"),
     }),
     onSubmit: async (values) => {
+      // Create New Tech Stack item
       if (!id) {
         try {
           setIsSaving(true);
@@ -51,10 +52,14 @@ const TechStackFormGroup = ({ stackData, id }: IProps) => {
           setIsSaving(false);
         }
       }
+      // Edit Existing Tech stack Item
       if (id) {
         try {
           setIsSaving(true);
-          const editedStack = await editTechStack(values);
+          const formatedValue = {...values}
+          formatedValue.images = techStackImage
+          console.log("fmtd value", formatedValue)
+          const editedStack = await editTechStack(formatedValue);
         } catch (err) {
           console.log("Failed to edit tech stack", err);
         } finally {
