@@ -2,6 +2,7 @@
 
 import { IOption } from "@/app/libs/types";
 import { useRouter } from "next/navigation";
+import {v4 as uuidv4} from "uuid"
 
 interface IProps {
   title: string;
@@ -18,7 +19,7 @@ export default function StackList({ stackList, title }: IProps) {
       <h2 className="heading-secondary">{title}</h2>
       <div className="stack-list-container">
         {stackList.map((item: any) => (
-          <div onClick={()=>handleClick(item.id)} className="stack-list-item">
+          <div key={uuidv4()} onClick={()=>handleClick(item.id)} className="stack-list-item">
             {item.label}
 
             <img
