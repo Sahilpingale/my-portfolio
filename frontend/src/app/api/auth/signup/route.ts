@@ -25,6 +25,12 @@ const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref("password")], "Passwords must match"),
 });
 
+export const signAccessToken = async (data: IAccessToken)=>{
+  const exp_duration = process.env.ACCESS_TOKEN_EXPIRY_TIME
+  data.expires_at = moment().add(exp_duration,"minutes").toDate().getTime()
+  return jwt.sign(data,process.env.JWT_SECRET!)
+}
+
 export async function POST(req: Request, res: Response) {
   const input = await req.json();
   //   Validate the input
@@ -71,11 +77,6 @@ export async function POST(req: Request, res: Response) {
     });
   }
 //   Create a JWT 
-const signAccessToken = async (data: IAccessToken)=>{
-    const exp_duration = process.env.ACCESS_TOKEN_EXPIRY_TIME
-    data.expires_at = moment().add(exp_duration,"minutes").toDate().getTime()
-    return jwt.sign(data,process.env.JWT_SECRET!)
-}
 const token = await signAccessToken({
     id: user?.id!,
     username: user?.username!
