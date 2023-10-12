@@ -30,6 +30,12 @@ export interface IOption {
   images?: string[];
 }
 
+export interface IAccessToken {
+  id: string
+  username: string
+  expires_at?: number;
+}
+
 export enum StackOptions {
   "TECHSTACK",
   "TOOL",
