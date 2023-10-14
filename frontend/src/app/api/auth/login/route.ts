@@ -61,6 +61,6 @@ const token = await signAccessToken({
 return NextResponse.json({
   success: true,
   message: "User logged in",
-  token
+  token: "Bearer " + token
 });
 }
