@@ -17,8 +17,8 @@ export default async function TechStackList() {
   );
   return (
     <section className="portfolio-details-top">
-        <StackList stackList={techStackItems} title="Tech Stack Items"/>
-        <StackList stackList={toolItems} title="Toolbox Items"/>
+        {/* <StackList stackList={techStackItems} title="Tech Stack Items"/>
+        <StackList stackList={toolItems} title="Toolbox Items"/> */}
         <div className="mx-5 my-3 mb-4">
 
         </div>
