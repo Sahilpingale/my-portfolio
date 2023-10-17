@@ -22,7 +22,7 @@ export default async function ProjectPage({
     <>
       {/* TOP SECTION  */}
       <section className="portfolio-details-top">
-        <div className="mx-5 my-3 mb-4">
+        <div className="title-conntainer">
           <div className="flex gap-3 alignCenter justifySpaceBetween">
             <h2 className="heading-secondary">{data.title}</h2>
             <div className="flex gap-1">
@@ -30,7 +30,7 @@ export default async function ProjectPage({
                 href={`/admin/manage-project/${projectId}`}
                 className="flex gap-1 alignCenter"
               >
-                <span>Manage</span>
+                <span className="project-options-text">Manage</span>
                 <ManageIcon />
               </Link>
               <DeleteProject projectId={projectId} />

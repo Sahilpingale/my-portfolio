@@ -17,13 +17,15 @@ const ProjectCarousel =  ({ projectId, images }: IProps) => {
   );
 
   return (
+    <div className="my-carousel">
     <Carousel autoPlay>
         {constructedURLList.map((item) => (
-          <div key={uuidv4()}>
-            <img width={100} height={100}className="carousel-slide" alt="" src={item} />
+          <div  key={uuidv4()}>
+            <img className="carousel-slide" alt="" src={item} />
           </div>
         ))}
     </Carousel>
+    </div>
   );
 };
 export default ProjectCarousel;

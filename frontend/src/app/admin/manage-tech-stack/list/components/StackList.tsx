@@ -10,6 +10,7 @@ interface IProps {
 }
 
 export default function StackList({ stackList, title }: IProps) {
+  // console.log("my stack list", stackList)
     const router = useRouter()
     const handleClick = (id:string)=>{
         router.push(`/admin/manage-tech-stack/${id}`)

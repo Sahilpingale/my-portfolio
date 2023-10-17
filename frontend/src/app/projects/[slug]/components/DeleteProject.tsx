@@ -23,7 +23,7 @@ export default function DeleteProject({projectId}: {projectId: string}) {
       className="flex gap-1 alignCenter defaultButton"
       disabled={isLoading}
     >
-      <span>Delete</span> <TrashIcon />
+      <span className="project-options-text">Delete</span> <TrashIcon />
     </button>
   );
 }

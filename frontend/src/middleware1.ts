@@ -6,9 +6,10 @@ import * as jose from 'jose'
 const SECRET = process.env.JWT_SECRET 
 export async function middleware(request: NextRequest) {
     // If its a GET request prceed without Authorization
-    if(request.method === "GET"){
-        NextResponse.next()
-    }
+    // console.log(request.method,"xxxx")
+    // if(request.method === "GET"){
+    //     return NextResponse.next()
+    // }
 
     // Extract Token from header
     const bearerToken = request.headers.get('authorization')

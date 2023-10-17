@@ -1,3 +1,7 @@
+.title-conntainer{
+  margin-block: 50px;
+  margin-inline: 40px;
+}
 /* Below 1000px */
 @media (max-width: 62.5rem) {
   .portfolioDetails-description {
@@ -19,11 +23,11 @@
   .portfolio-details-grid {
     display: grid;
     grid-template-columns: 1fr;
-    row-gap: 6.4rem;
+    row-gap: 2.4rem;
   }
-  .techStack-grid {
+  /* .techStack-grid {
     padding-right: 27.6rem;
-  }
+  } */
   .portfolio-details-bottom {
     margin-left: 1.6rem;
     margin-right: 1.6rem;
@@ -35,11 +39,16 @@
 @media (max-width: 42rem) {
   .techStack-grid {
     grid-template-columns: 1fr;
+    row-gap: 10px;
   }
 }
 
 /* Below 544 */
 @media (max-width: 34rem) {
+  .title-conntainer{
+    margin-block: 30px;
+    margin-inline: 20px;
+  }
   .techStack-description {
     font-size: 1.1rem;
   }
@@ -77,6 +86,9 @@
 @media (max-width: 26.5rem) {
   .portfolioDetails-description {
     font-size: 0.9rem;
+  }
+  .project-options-text{
+    font-size: 12px;
   }
   .techStack-description {
     font-size: 0.9rem;

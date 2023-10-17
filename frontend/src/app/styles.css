@@ -516,7 +516,19 @@ footer {
 }
 .carousel-slide {
   width: 100%;
-  height: auto;
+  /* height: auto; */
+  /* width: 200px; */
+  height: 500px;
+  object-fit:contain
+}
+.stack-list-image{
+  width: 35px;
+}
+.my-carousel .thumbs-wrapper li {
+  height: 50px !important;
+}
+.my-carousel .thumbs-wrapper li img{
+  height: 50px !important;
 }
 
 /* *****************SECTION-CREATE-NEW-PROJECT****************** */

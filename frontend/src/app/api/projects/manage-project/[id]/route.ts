@@ -20,6 +20,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
                 label: true,
                 value: true,
                 type: true,
+                images:true,
               },
             },
           },
